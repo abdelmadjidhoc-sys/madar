@@ -223,6 +223,16 @@ html[dir="rtl"] .icon-arrow {
   transform: scaleX(-1);
 }
 
+/* A "back" arrow is the inverse: it points backward, so its mirroring rule
+   is the opposite of .icon-arrow's. */
+.icon-arrow--back {
+  transform: scaleX(-1);
+}
+
+html[dir="rtl"] .icon-arrow--back {
+  transform: scaleX(1);
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -431,6 +441,19 @@ html[lang="en"] .lang-toggle {
   background: var(--color-teal);
 }
 
+.hero-photo-flip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* The photo's dense dot-pattern/glow sits on its own left edge, which is the
+   empty (non-text) side in RTL by default. Flip it in LTR so that busy side
+   stays opposite the reading text there too, under the orbit motif. */
+html[dir="ltr"] .hero-photo-flip {
+  transform: scaleX(-1);
+}
+
 .hero-photo {
   position: absolute;
   inset: 0;
@@ -438,13 +461,19 @@ html[lang="en"] .lang-toggle {
   height: 100%;
   object-fit: cover;
   object-position: 15% center;
+  transform-origin: center;
+  animation: hero-zoom 100s linear infinite alternate;
 }
 
-/* The photo's dense dot-pattern/glow sits on its own left edge, which is the
-   empty (non-text) side in RTL by default. Flip it in LTR so that busy side
-   stays opposite the reading text there too, under the orbit motif. */
-html[dir="ltr"] .hero-photo {
-  transform: scaleX(-1);
+/* Constant, near-imperceptible drift: +0.1% scale per second, breathing
+   between 100% and 110% rather than looping with a visible jump-cut. */
+@keyframes hero-zoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+  }
 }
 
 .hero-overlay {
@@ -453,9 +482,13 @@ html[dir="ltr"] .hero-photo {
   background: linear-gradient(to top, rgba(9, 27, 31, 0.6), rgba(9, 27, 31, 0.25) 45%, rgba(9, 27, 31, 0.45) 100%);
 }
 
+/* Logical position: the ring stays on the SAME side as the reading text in
+   both languages (inline-start), mirroring together as one composition. Only
+   the wallpaper photo (.hero-photo) flips independently so its busy side
+   stays opposite the text — see the transform rule below. */
 .hero-orbit {
   position: absolute;
-  inset-inline-end: -18%;
+  inset-inline-start: -18%;
   top: 50%;
   transform: translateY(-50%);
   width: min(760px, 90vw);
@@ -577,38 +610,17 @@ section h2 {
   justify-self: center;
 }
 
-.about-orbit {
-  width: min(280px, 60vw);
-  color: var(--color-teal);
-}
-
-.about-orbit-ring {
-  fill: none;
-  stroke: var(--color-teal);
-  stroke-width: 1.2;
-  opacity: 0.35;
-}
-
-.about-orbit-ring--sand {
-  stroke: var(--color-sand);
-  opacity: 0.9;
-}
-
-.about-orbit-node {
-  fill: var(--color-teal);
-}
-
-.about-orbit-node--amber {
-  fill: var(--color-amber);
-}
-
-.about-orbit-node--maroon {
-  fill: var(--color-maroon);
+.about-vision-logo {
+  width: 430px;
+  max-width: 100%;
+  height: auto;
 }
 
 @media (min-width: 900px) {
   .about-inner {
-    grid-template-columns: 1.2fr 0.8fr;
+    /* Figure column widened further so the logo reads as a real visual
+       anchor, not a small aside next to the text. */
+    grid-template-columns: 0.85fr 1.45fr;
   }
 }
 
@@ -836,33 +848,115 @@ section h2 {
   height: 20px;
 }
 
-.form-embed {
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
+/* ---------- Contact form ---------- */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
   background: var(--color-sand);
-  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-md);
 }
 
-.form-embed iframe {
-  width: 100%;
-  min-height: 520px;
+.form-honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
   border: 0;
-  display: block;
-  border-radius: calc(var(--radius-lg) - var(--space-3));
+  padding: 0;
+  margin: 0;
 }
 
-.form-fallback-link {
-  display: inline-block;
-  margin-block-start: var(--space-4);
+.form-row label,
+.form-row legend {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--color-ink);
+  padding: 0;
+}
+
+.form-hint {
+  font-size: 0.82rem;
+  color: rgba(28, 26, 23, 0.6);
+  margin-block-start: -0.25rem;
+}
+
+.form-row input[type="text"],
+.form-row input[type="tel"],
+.form-row input[type="email"],
+.form-row textarea {
+  font: inherit;
+  font-size: 0.95rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--radius-md);
+  border: 1.5px solid rgba(28, 26, 23, 0.16);
+  background: var(--color-cream);
+  color: var(--color-ink);
+  transition: border-color 0.2s var(--ease-out);
+}
+
+.form-row input:focus-visible,
+.form-row textarea:focus-visible {
+  outline: none;
+  border-color: var(--color-teal);
+}
+
+.form-row textarea {
+  resize: vertical;
+  min-height: 4.5rem;
+}
+
+.form-choice-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+}
+
+.form-choice {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 400;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+.form-choice input[type="radio"] {
+  accent-color: var(--color-teal);
+  width: 17px;
+  height: 17px;
+}
+
+.form-other-input {
+  margin-block-start: var(--space-1);
+}
+
+.contact-form .btn--primary {
+  align-self: flex-start;
+}
+
+.form-status {
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--color-teal);
-  border-bottom: 1px solid currentColor;
+  min-height: 1.2em;
 }
 
-.form-fallback-link:hover {
-  color: var(--color-amber-dark);
+.form-status[data-state="success"] {
+  color: var(--color-teal);
+}
+
+.form-status[data-state="error"] {
+  color: var(--color-maroon);
 }
 
 @media (min-width: 900px) {
@@ -933,4 +1027,39 @@ section h2 {
     width: auto;
     text-align: end;
   }
+}
+
+/* ---------- Session request page (contact.html) ---------- */
+.container--narrow {
+  max-width: 720px;
+}
+
+.session-page {
+  background: var(--color-cream);
+  padding-block: var(--space-8) var(--space-9);
+}
+
+.session-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-teal);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: var(--space-6);
+}
+
+.session-back-link:hover {
+  color: var(--color-amber-dark);
+}
+
+.session-page h1 {
+  font-size: clamp(1.75rem, 2.5vw + 1rem, 2.25rem);
+  margin-bottom: var(--space-4);
+}
+
+.session-intro {
+  color: rgba(28, 26, 23, 0.7);
+  max-width: 62ch;
+  margin-bottom: var(--space-7);
 }

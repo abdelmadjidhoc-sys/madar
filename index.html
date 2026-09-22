@@ -91,9 +91,14 @@
     <!-- ============ HERO ============ -->
     <section class="hero" id="top">
       <div class="hero-media" aria-hidden="true">
-        <!-- Brand wallpaper supplied by client (assets/images/hero-bg.png). Mirrored
-             in English via CSS so the dense pattern stays on the decorative side. -->
-        <img class="hero-photo" src="assets/images/hero-bg.png" alt="" />
+        <!-- Brand wallpaper supplied by client (assets/images/hero-bg.png). The
+             outer div mirrors per language (dense pattern stays opposite the
+             text); the img itself carries the slow constant zoom — kept on
+             separate elements since a single element can't hold two
+             independent transforms (a static flip + an animated scale). -->
+        <div class="hero-photo-flip">
+          <img class="hero-photo" src="assets/images/hero-bg.png" alt="" />
+        </div>
         <div class="hero-overlay"></div>
         <svg class="hero-orbit" viewBox="0 0 640 640" role="presentation">
           <ellipse class="orbit-ring orbit-ring--1" cx="320" cy="320" rx="270" ry="270" />
@@ -140,14 +145,11 @@
             يستلهم مدار توجه رؤية قطر الوطنية 2030، لكنه منصة مستقلة، وليس جهة رسمية تابعة لها.
           </p>
         </div>
-        <div class="about-figure" aria-hidden="true">
-          <svg viewBox="0 0 280 280" class="about-orbit">
-            <circle cx="140" cy="140" r="118" class="about-orbit-ring" />
-            <circle cx="140" cy="140" r="82" class="about-orbit-ring about-orbit-ring--sand" />
-            <circle cx="140" cy="22" r="7" class="about-orbit-node" />
-            <circle cx="240" cy="196" r="5" class="about-orbit-node about-orbit-node--amber" />
-            <circle cx="52" cy="188" r="5" class="about-orbit-node about-orbit-node--maroon" />
-          </svg>
+        <!-- Qatar National Vision 2030 mark, supplied by client, paired with the
+             non-affiliation disclaimer at start: Madar draws on QNV2030's
+             direction but is not an official partner. -->
+        <div class="about-figure">
+          <img class="about-vision-logo" src="assets/images/qnv2030-logo.png" alt="Qatar National Vision 2030" />
         </div>
       </div>
     </section>
@@ -290,19 +292,12 @@
 
         <div class="contact-form-panel">
           <h3 class="contact-subheading" data-i18n="contact.formHeading">أرسل طلبك</h3>
-          <div class="form-embed">
-            <!--
-              TODO(contact): confirm whether this shared Google Form should handle
-              all inbound contact, or whether a dedicated Madar form is needed later.
-            -->
-            <iframe
-              src="https://docs.google.com/forms/d/e/1FAIpQLSf024hHCCtjplG8fjequcT8BxPVUeMQNuNkRmkdqJp4BsDIdA/viewform?embedded=true"
-              title="Madar contact form"
-              loading="lazy"
-            >جارِ تحميل النموذج…</iframe>
-          </div>
-          <a class="form-fallback-link" href="https://forms.gle/UHVrdyENZ5YkHgwN9" target="_blank" rel="noopener">
-            <span data-i18n="contact.formFallback">لم يظهر النموذج؟ اضغط هنا لفتحه في صفحة جديدة.</span>
+          <p data-i18n="contact.formIntro">الاستمارة تستغرق أقل من دقيقتين، وسيتواصل معك فريقنا خلال أيام قليلة.</p>
+          <a class="btn btn--primary" href="contact.html">
+            <span data-i18n="contact.formHeading">أرسل طلبك</span>
+            <svg class="icon icon-arrow" viewBox="0 0 16 16" aria-hidden="true">
+              <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+            </svg>
           </a>
         </div>
       </div>

@@ -65,11 +65,10 @@
       }
     });
 
-    // Document-level metadata (title + description also carry data-i18n/data-i18n-attr,
-    // this just keeps document.title in sync for browser tab / history entries)
-    if (strings.meta && strings.meta.title) {
-      document.title = strings.meta.title;
-    }
+    // document.title is not set explicitly here: the <title> element already
+    // carries its own data-i18n (meta.title on index.html, sessionPage.metaTitle
+    // on contact.html) and gets updated by the sweep above like any other
+    // element — the browser keeps document.title in sync with it automatically.
 
     storeLang(lang);
   }
@@ -132,6 +131,74 @@
     });
   }
 
+  function initContactForm() {
+    var form = document.getElementById("contactForm");
+    if (!form) return;
+
+    var statusOtherRadio = document.getElementById("statusOtherRadio");
+    var statusOtherInput = document.getElementById("currentStatusOther");
+    form.querySelectorAll('input[name="currentStatus"]').forEach(function (radio) {
+      radio.addEventListener("change", function () {
+        var isOther = statusOtherRadio.checked;
+        statusOtherInput.hidden = !isOther;
+        if (!isOther) statusOtherInput.value = "";
+      });
+    });
+
+    var submitButton = document.getElementById("contactSubmit");
+    var statusEl = document.getElementById("contactFormStatus");
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      if (!form.reportValidity()) return;
+
+      var strings = content[currentLang()].form;
+      var data = new FormData(form);
+      var payload = {
+        company: data.get("company"), // honeypot
+        fullName: data.get("fullName"),
+        phone: data.get("phone"),
+        ageRange: data.get("ageRange"),
+        currentStatus: data.get("currentStatus"),
+        currentStatusOther: data.get("currentStatusOther"),
+        email: data.get("email"),
+        guidanceField: data.get("guidanceField"),
+        mainChallenge: data.get("mainChallenge"),
+        desiredOutcome: data.get("desiredOutcome"),
+        triedBefore: data.get("triedBefore") === "yes" ? true : data.get("triedBefore") === "no" ? false : null,
+        consultationMethod: data.get("consultationMethod"),
+      };
+
+      submitButton.disabled = true;
+      statusEl.removeAttribute("data-state");
+      statusEl.textContent = strings.submitting;
+
+      fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error("request failed");
+          return res.json();
+        })
+        .then(function () {
+          statusEl.setAttribute("data-state", "success");
+          statusEl.textContent = strings.successMessage;
+          form.reset();
+          statusOtherInput.hidden = true;
+        })
+        .catch(function () {
+          statusEl.setAttribute("data-state", "error");
+          statusEl.textContent = strings.errorMessage;
+        })
+        .finally(function () {
+          submitButton.disabled = false;
+        });
+    });
+  }
+
   function initHeaderScrollState() {
     var header = document.getElementById("siteHeader");
     if (!header) return;
@@ -177,6 +244,7 @@
     initMobileNav();
     initSocialLinks();
     initPodcastEmbed();
+    initContactForm();
     initHeaderScrollState();
     initScrollReveal();
   });

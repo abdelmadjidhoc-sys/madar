@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Madar Admin — Submissions</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+  <div class="admin-picker" id="adminPicker">
+    <img class="admin-picker-logo" src="assets/images/logo-on-dark.svg" alt="Madar" />
+    <p class="admin-picker-label">Who's this?</p>
+    <div class="admin-picker-options">
+      <button class="admin-picker-btn" type="button" data-name="Abdelmadjid">Abdelmadjid</button>
+      <button class="admin-picker-btn" type="button" data-name="Saoud">Saoud</button>
+    </div>
+  </div>
+
+  <div id="adminApp" hidden>
+    <header class="admin-header">
+      <div class="admin-header-inner">
+        <a href="/" aria-label="Back to the site">
+          <img class="admin-logo" src="assets/images/logo-on-dark.svg" alt="Madar" />
+        </a>
+        <h1>Submissions</h1>
+        <p class="admin-whoami">
+          <span id="adminWhoami"></span>
+          <button class="admin-switch-link" id="adminSwitch" type="button">Switch</button>
+        </p>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <h2 class="admin-title" id="adminTitle">Submissions</h2>
+      <p id="adminStatus" class="admin-status"></p>
+
+      <div class="admin-card">
+        <table class="admin-table" id="adminTable" hidden>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="adminTableBody"></tbody>
+        </table>
+      </div>
+    </main>
+
+    <div class="admin-detail-overlay" id="detailOverlay" hidden>
+      <div class="admin-detail" role="dialog" aria-modal="true" aria-labelledby="detailName">
+        <button class="admin-detail-close" id="detailClose" type="button" aria-label="Close">✕</button>
+        <h2 id="detailName"></h2>
+        <dl class="admin-detail-fields" id="detailFields"></dl>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

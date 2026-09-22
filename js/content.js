@@ -78,8 +78,49 @@ window.MADAR_CONTENT = {
         "تابعونا لمزيد من الفرص والتحديثات، أو راسلونا مباشرة عبر النموذج لطلب جلسة أو الاستفسار.",
       socialHeading: "تابعونا",
       formHeading: "أرسل طلبك",
-      formFallback: "لم يظهر النموذج؟ اضغط هنا لفتحه في صفحة جديدة.",
-      formCta: "افتح النموذج",
+      formIntro: "الاستمارة تستغرق أقل من دقيقتين، وسيتواصل معك فريقنا خلال أيام قليلة.",
+    },
+    sessionPage: {
+      metaTitle: "طلب جلسة توجيه | مدار",
+      metaDescription: "احجز جلسة توجيه وتطوير مع مدار عبر النموذج التالي.",
+      heading: "احجز جلستك التوجيهية",
+      intro:
+        "يساعدنا هذا النموذج في التعرف عليك وفهم أهدافك والتحديات التي تواجهها، حتى نتمكن من تحديد الجلسة المناسبة ومساعدتك على تطوير نفسك واتخاذ خطوات أوضح نحو أهدافك.",
+      backLink: "العودة إلى الموقع",
+    },
+    form: {
+      fullNameLabel: "الاسم الكامل",
+      phoneLabel: "رقم الهاتف",
+      ageRangeLabel: "الفئة العمرية",
+      age1517: "من 15 إلى 17 سنة",
+      age1821: "من 18 إلى 21 سنة",
+      age2225: "من 22 إلى 25 سنة",
+      age2631: "من 26 إلى 31 سنة",
+      statusLabel: "الوضع الحالي",
+      statusSchool: "طالب مدرسة",
+      statusUniversity: "طالب جامعي",
+      statusEmployed: "موظف",
+      statusJobSeeker: "باحث عن عمل",
+      statusOther: "غير ذلك",
+      statusOtherPlaceholder: "يرجى التحديد",
+      emailLabel: "البريد الإلكتروني",
+      guidanceFieldLabel: "في أي مجال ترغب في الحصول على التوجيه؟",
+      mainChallengeLabel: "ما التحدي الرئيسي الذي تواجهه حاليًا؟",
+      mainChallengeHint: "اكتب لنا باختصار أكثر شيء يشغلك أو يمنعك من التقدم في الوقت الحالي.",
+      desiredOutcomeLabel: "ما النتيجة التي ترغب في الوصول إليها بعد الجلسة؟",
+      desiredOutcomeHint:
+        "مثال: تحديد هدف، اختيار تخصص مناسب، تطوير مهارة، تنظيم وقت، بدء مشروع، أو معرفة الخطوة التالية في مسارك.",
+      triedBeforeLabel: "هل حاولت سابقًا معالجة هذا التحدي؟",
+      yes: "نعم",
+      no: "لا",
+      consultationMethodLabel: "ما الطريقة المناسبة لك للاستشارة؟",
+      zoom: "اجتماع Zoom",
+      inPerson: "استشارة حضورية",
+      submit: "إرسال الطلب",
+      submitting: "جارٍ الإرسال...",
+      successMessage: "شكرًا لك! تم استلام طلبك، وسنتواصل معك قريبًا.",
+      errorMessage: "حدث خطأ ما. حاول مرة أخرى أو راسلنا مباشرة.",
+      requiredError: "يرجى تعبئة الحقول المطلوبة.",
     },
     footer: {
       disclaimer:
@@ -156,9 +197,50 @@ window.MADAR_CONTENT = {
         "Follow us for more opportunities and updates, or reach out directly through the form to request a session or ask a question.", // DRAFT
       socialHeading: "Follow along",
       formHeading: "Send your request",
-      formFallback: "Form not loading? Click here to open it in a new page.",
-      formCta: "Open the form",
+      formIntro: "Takes less than two minutes — our team will get back to you within a few days.", // DRAFT
     },
+    sessionPage: {
+      metaTitle: "Book a Guidance Session | Madar", // DRAFT
+      metaDescription: "Book a guidance and development session with Madar through the form below.", // DRAFT
+      heading: "Book your guidance session", // DRAFT
+      intro:
+        "This form helps us get to know you and understand your goals and challenges, so we can match you with the right session and help you take clearer steps forward.", // DRAFT
+      backLink: "Back to the site",
+    },
+    form: {
+      fullNameLabel: "Full name",
+      phoneLabel: "Phone number",
+      ageRangeLabel: "Age range",
+      age1517: "15–17",
+      age1821: "18–21",
+      age2225: "22–25",
+      age2631: "26–31",
+      statusLabel: "Current status",
+      statusSchool: "School student",
+      statusUniversity: "University student",
+      statusEmployed: "Employed",
+      statusJobSeeker: "Job seeker",
+      statusOther: "Other",
+      statusOtherPlaceholder: "Please specify",
+      emailLabel: "Email",
+      guidanceFieldLabel: "What area would you like guidance in?",
+      mainChallengeLabel: "What's the main challenge you're facing right now?",
+      mainChallengeHint: "Briefly tell us the one thing that's holding you back or on your mind.",
+      desiredOutcomeLabel: "What outcome are you hoping for after the session?",
+      desiredOutcomeHint:
+        "For example: picking a direction, choosing a specialization, building a skill, planning your time, starting a project, or figuring out your next step.",
+      triedBeforeLabel: "Have you tried addressing this challenge before?",
+      yes: "Yes",
+      no: "No",
+      consultationMethodLabel: "What works best for the consultation?",
+      zoom: "Zoom call",
+      inPerson: "In person",
+      submit: "Send request",
+      submitting: "Sending...",
+      successMessage: "Thank you! We've received your request and will be in touch soon.",
+      errorMessage: "Something went wrong. Please try again or email us directly.",
+      requiredError: "Please fill in the required fields.",
+    }, // DRAFT (all form.* strings)
     footer: {
       disclaimer:
         "Madar is an independent platform that supports the direction of Qatar National Vision 2030. It is not an official affiliate of its entities.", // DRAFT

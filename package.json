@@ -2,8 +2,13 @@
   "name": "madar",
   "version": "1.0.0",
   "private": true,
-  "description": "Madar (مدار) — bilingual one-page site. Plain HTML/CSS/JS, no build step. bootstrap-icons is a dev-time icon source only: icon SVGs are copied inline into index.html, so `node_modules` is never shipped or loaded by the page.",
+  "description": "Madar (مدار) — bilingual one-page site. The frontend (index.html/css/js) is plain HTML/CSS/JS with no build step. api/contact.js is a Vercel serverless function that saves Contact-section submissions to Postgres (Neon) via the `pg` package. bootstrap-icons is a dev-time icon source only — its SVGs are copied inline into index.html, so node_modules is never shipped to the browser.",
+  "scripts": {
+    "setup-db": "node --env-file=.env scripts/setup-db.js",
+    "dev": "node --env-file=.env scripts/dev-server.js"
+  },
   "dependencies": {
-    "bootstrap-icons": "^1.13.1"
+    "bootstrap-icons": "^1.13.1",
+    "pg": "^8.23.0"
   }
 }

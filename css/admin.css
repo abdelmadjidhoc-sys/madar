@@ -1,0 +1,272 @@
+/* Madar admin — internal tool, not part of the public brand surface.
+   Reuses the brand palette as flat values (not the public site's token set)
+   since this page never loads styles.css. */
+:root {
+  --admin-teal: #0e5c68;
+  --admin-teal-dark: #093f47;
+  --admin-maroon: #7a1e33;
+  --admin-amber: #e8873a;
+  --admin-sand: #c9bfae;
+  --admin-cream: #faf7f2;
+  --admin-ink: #1c1a17;
+  --admin-border: rgba(28, 26, 23, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--admin-cream);
+  color: var(--admin-ink);
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+}
+
+/* ---------- Name picker ---------- */
+.admin-picker {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  background: var(--admin-teal-dark);
+  padding: 1.5rem;
+}
+
+.admin-picker[hidden] {
+  display: none;
+}
+
+.admin-picker-logo {
+  width: 140px;
+  height: auto;
+}
+
+.admin-picker-label {
+  color: var(--admin-cream);
+  font-size: 1rem;
+  margin: 0;
+}
+
+.admin-picker-options {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.admin-picker-btn {
+  font: inherit;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.9rem 2rem;
+  border-radius: 999px;
+  border: 0;
+  background: var(--admin-amber);
+  color: var(--admin-ink);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.admin-picker-btn:hover {
+  transform: translateY(-2px);
+}
+
+.admin-header {
+  background: var(--admin-teal-dark);
+  padding: 1.25rem 1.5rem;
+}
+
+.admin-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 960px;
+  margin-inline: auto;
+}
+
+.admin-whoami {
+  margin: 0 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(250, 247, 242, 0.7);
+  font-size: 0.85rem;
+}
+
+.admin-switch-link {
+  font: inherit;
+  font-size: 0.8rem;
+  color: var(--admin-amber);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.admin-logo {
+  width: 110px;
+  height: auto;
+}
+
+.admin-header h1 {
+  color: var(--admin-cream);
+  font-size: 1.15rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.admin-main {
+  max-width: 1040px;
+  margin-inline: auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.admin-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--admin-ink);
+  margin: 0 0 1.25rem;
+}
+
+.admin-status {
+  color: rgba(28, 26, 23, 0.55);
+  font-size: 0.9rem;
+}
+
+.admin-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(14, 92, 104, 0.08);
+  overflow: hidden;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th {
+  text-align: start;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(28, 26, 23, 0.45);
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.admin-table td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--admin-border);
+  font-size: 0.95rem;
+}
+
+.admin-table tbody tr {
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.admin-table tbody tr:hover {
+  background: rgba(201, 191, 174, 0.18);
+}
+
+.admin-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.admin-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+}
+
+.admin-avatar {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--admin-teal);
+  color: var(--admin-cream);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.admin-date-cell {
+  color: rgba(28, 26, 23, 0.55);
+}
+
+.admin-detail-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 27, 31, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 10;
+}
+
+.admin-detail-overlay[hidden] {
+  display: none;
+}
+
+.admin-detail {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  max-width: 560px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 2rem;
+  box-shadow: 0 24px 56px rgba(9, 27, 31, 0.3);
+}
+
+.admin-detail h2 {
+  margin: 0 0 1.25rem;
+  font-size: 1.3rem;
+  color: var(--admin-teal);
+}
+
+.admin-detail-close {
+  position: absolute;
+  top: 1rem;
+  inset-inline-end: 1rem;
+  border: 0;
+  background: rgba(28, 26, 23, 0.06);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--admin-ink);
+}
+
+.admin-detail-fields {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0;
+}
+
+.admin-detail-fields dt {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: rgba(28, 26, 23, 0.5);
+  margin-bottom: 0.15rem;
+}
+
+.admin-detail-fields dd {
+  margin: 0;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+}

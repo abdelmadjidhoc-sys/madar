@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/adminmadar", "destination": "/adminmadar.html" }
+  ]
+}
