@@ -1,0 +1,9 @@
+{
+  "name": "madar",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Madar (مدار) — bilingual one-page site. Plain HTML/CSS/JS, no build step. bootstrap-icons is a dev-time icon source only: icon SVGs are copied inline into index.html, so `node_modules` is never shipped or loaded by the page.",
+  "dependencies": {
+    "bootstrap-icons": "^1.13.1"
+  }
+}

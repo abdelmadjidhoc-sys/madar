@@ -1,0 +1,936 @@
+/* =========================================================================
+   Madar — stylesheet
+   Mobile-first. RTL (Arabic, default) and LTR (English) share this file:
+   layout uses CSS logical properties (margin-inline, text-align: start/end,
+   etc.) so direction mirrors automatically from the <html dir> attribute —
+   there is no separate [dir="rtl"] duplicate ruleset to maintain, except for
+   the few genuinely directional icons noted below.
+   ========================================================================= */
+
+/* ---------- Tokens ---------- */
+:root {
+  /* Brand colors */
+  --color-teal: #0e5c68;
+  --color-teal-dark: #093f47;
+  --color-maroon: #7a1e33;
+  --color-amber: #e8873a;
+  --color-amber-dark: #cf6f24;
+  /* Tint of the brand amber, lightened only enough to clear 4.5:1 on the teal
+     field (raw --color-amber measures ~2.9:1 there) — for small amber text set
+     directly on teal, never for buttons/backgrounds where amber stays true. */
+  --color-amber-on-teal: #f5c08a;
+  --color-sand: #c9bfae;
+  --color-cream: #faf7f2;
+  --color-ink: #1c1a17;
+
+  /* Derived */
+  --color-ink-on-teal: #f3efe7;
+  --color-ink-on-teal-muted: rgba(243, 239, 231, 0.78);
+  --color-border-on-cream: rgba(28, 26, 23, 0.12);
+
+  /* Type: IBM Plex Sans Arabic (Arabic) paired with IBM Plex Sans (Latin) —
+     same family, matched metrics, confirmed as the safe default for everything
+     including headlines.
+     TODO(type): to try the draft brand-guide headline pairing (Baloo Bhaijaan 2
+     for Arabic headlines / Space Grotesk for English text+numbers), this is the
+     one line to change: */
+  --font-display: var(--font-body);
+
+  --font-body-ar: "IBM Plex Sans Arabic", "Segoe UI", sans-serif;
+  --font-body-en: "IBM Plex Sans", "Segoe UI", sans-serif;
+  --font-body: var(--font-body-ar);
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+
+  --container-width: 1180px;
+  --header-height: 76px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 2px 8px rgba(28, 26, 23, 0.08);
+  --shadow-md: 0 12px 32px rgba(14, 92, 104, 0.16);
+  --shadow-lg: 0 24px 56px rgba(14, 92, 104, 0.22);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html[lang="en"] {
+  --font-body: var(--font-body-en);
+}
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-height) + 12px);
+}
+
+body {
+  margin: 0;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  max-width: 68ch;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+/* Browser surfaces carry the design too, not just the parts we draw */
+::selection {
+  background: var(--color-amber);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+html {
+  scrollbar-color: var(--color-teal) var(--color-cream);
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-teal);
+  border-radius: var(--radius-pill);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+.skip-link {
+  position: absolute;
+  inset-inline-start: var(--space-4);
+  top: -60px;
+  z-index: 200;
+  background: var(--color-amber);
+  color: var(--color-ink);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  transition: top 0.2s var(--ease-out);
+}
+
+.skip-link:focus {
+  top: var(--space-4);
+}
+
+/* ---------- Icons & buttons ---------- */
+/* Icons are Bootstrap Icons (bootstrap-icons npm package), inlined as SVG —
+   solid currentColor fill, no build step required to use them. */
+.icon,
+.activity-icon svg,
+.social-list svg,
+.play-button svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.icon-arrow {
+  width: 18px;
+  height: 18px;
+}
+
+/* The arrow is drawn pointing toward reading-direction "forward"; in RTL
+   (the default language) forward is visually left, so it mirrors. */
+html[dir="rtl"] .icon-arrow {
+  transform: scaleX(-1);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.9rem 1.75rem;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: 1rem;
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out), background-color 0.2s var(--ease-out);
+}
+
+.btn--primary {
+  background: var(--color-amber);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-md);
+}
+
+.btn--primary:hover {
+  background: var(--color-amber-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn--outline {
+  border: 1.5px solid var(--color-teal);
+  color: var(--color-teal);
+}
+
+.btn--outline:hover {
+  background: var(--color-teal);
+  color: var(--color-ink-on-teal);
+  transform: translateY(-2px);
+}
+
+/* ---------- Logo ----------
+   logo-on-dark.svg is the cream/amber lockup, built for teal fields (header,
+   hero, footer all qualify). If a section with a cream/light background ever
+   needs the logo, swap in assets/images/logo-on-light.svg (teal lockup) there
+   instead — same file, opposite ground. */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+}
+
+.logo-img {
+  width: 150px;
+  height: auto;
+}
+
+.logo--hero {
+  margin-bottom: var(--space-6);
+}
+
+.logo--hero .logo-img {
+  width: 210px;
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--color-teal);
+  color: var(--color-ink-on-teal);
+  transition: box-shadow 0.25s var(--ease-out);
+}
+
+.site-header.is-scrolled {
+  box-shadow: 0 4px 24px rgba(9, 27, 31, 0.28);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-height);
+  gap: var(--space-5);
+}
+
+.site-nav ul {
+  display: none;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.lang-toggle {
+  border: 1.5px solid rgba(243, 239, 231, 0.4);
+  border-radius: var(--radius-pill);
+  padding: 0.5rem 1.1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-ink-on-teal);
+  transition: border-color 0.2s var(--ease-out), background-color 0.2s var(--ease-out);
+}
+
+/* The toggle always shows the OTHER language's name (e.g. "English" while the
+   page itself is Arabic), so it deliberately breaks from --font-body (which
+   follows the page's own language) and sets its own script's font directly. */
+html[lang="ar"] .lang-toggle {
+  font-family: var(--font-body-en);
+}
+
+html[lang="en"] .lang-toggle {
+  font-family: var(--font-body-ar);
+}
+
+.lang-toggle:hover {
+  border-color: var(--color-amber);
+  background: rgba(243, 239, 231, 0.08);
+}
+
+.nav-toggle {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+}
+
+.nav-toggle-bar {
+  width: 22px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  margin-inline: auto;
+  transition: transform 0.2s var(--ease-out), opacity 0.2s var(--ease-out);
+}
+
+.mobile-nav {
+  display: grid;
+  grid-template-rows: 0fr;
+  background: var(--color-teal-dark);
+  transition: grid-template-rows 0.3s var(--ease-out);
+}
+
+.mobile-nav.is-open {
+  grid-template-rows: 1fr;
+}
+
+.mobile-nav-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.mobile-nav ul {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-4) var(--space-5) var(--space-6);
+  gap: var(--space-1);
+}
+
+.mobile-nav a {
+  display: block;
+  padding: var(--space-3) 0;
+  font-weight: 500;
+  color: var(--color-ink-on-teal-muted);
+}
+
+.mobile-nav a:hover {
+  color: var(--color-ink-on-teal);
+}
+
+@media (min-width: 900px) {
+  .site-nav ul {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+  }
+
+  .site-nav a {
+    font-weight: 500;
+    color: var(--color-ink-on-teal-muted);
+    transition: color 0.2s var(--ease-out);
+  }
+
+  .site-nav a:hover {
+    color: var(--color-ink-on-teal);
+  }
+
+  .nav-toggle,
+  .mobile-nav {
+    display: none;
+  }
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(165deg, var(--color-teal) 0%, var(--color-teal-dark) 100%);
+  color: var(--color-ink-on-teal);
+  padding-block: var(--space-9) var(--space-10);
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--color-teal);
+}
+
+.hero-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 15% center;
+}
+
+/* The photo's dense dot-pattern/glow sits on its own left edge, which is the
+   empty (non-text) side in RTL by default. Flip it in LTR so that busy side
+   stays opposite the reading text there too, under the orbit motif. */
+html[dir="ltr"] .hero-photo {
+  transform: scaleX(-1);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(9, 27, 31, 0.6), rgba(9, 27, 31, 0.25) 45%, rgba(9, 27, 31, 0.45) 100%);
+}
+
+.hero-orbit {
+  position: absolute;
+  inset-inline-end: -18%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(760px, 90vw);
+  height: auto;
+  opacity: 0.5;
+}
+
+.orbit-ring {
+  fill: none;
+  stroke: rgba(250, 247, 242, 0.25);
+  stroke-width: 1.2;
+  transform-origin: 320px 320px;
+}
+
+.orbit-ring--1 {
+  animation: spin 90s linear infinite;
+}
+
+.orbit-ring--2 {
+  stroke: rgba(232, 135, 58, 0.35);
+  animation: spin 70s linear infinite reverse;
+}
+
+.orbit-nodes {
+  transform-origin: 320px 320px;
+  animation: spin 90s linear infinite;
+}
+
+.orbit-node {
+  fill: var(--color-amber);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Deliberately NOT narrowed to 46rem here: this element shares the plain
+   .container rules (1180px, centered) so its text starts flush at the same
+   edge as the header logo and every other section's heading below it. The
+   narrower measure for hero copy is applied per text element instead. */
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  padding-block: var(--space-6);
+}
+
+.hero-tagline {
+  font-weight: 600;
+  color: var(--color-amber-on-teal);
+  font-size: 1.05rem;
+  margin-bottom: var(--space-4);
+}
+
+.hero-headline {
+  max-width: 20ch;
+  font-size: clamp(2.25rem, 4vw + 1.25rem, 4rem);
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-5);
+}
+
+.hero-subhead {
+  font-size: clamp(1.05rem, 1vw + 0.9rem, 1.25rem);
+  color: var(--color-ink-on-teal-muted);
+  max-width: 40ch;
+  margin-bottom: var(--space-7);
+}
+
+/* ---------- Reveal-on-scroll (the page's one authored motion moment,
+   orchestrated once rather than scattered per-element effects) ---------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Section rhythm ---------- */
+section {
+  padding-block: var(--space-9);
+}
+
+section h2 {
+  font-size: clamp(1.75rem, 2.5vw + 1rem, 2.5rem);
+  max-width: 24ch;
+}
+
+/* ---------- About ---------- */
+.about {
+  background: var(--color-cream);
+}
+
+.about-inner {
+  display: grid;
+  gap: var(--space-7);
+  align-items: center;
+}
+
+.about-body {
+  margin-block-start: var(--space-5);
+  color: var(--color-ink);
+  font-size: 1.05rem;
+}
+
+.about-disclaimer {
+  margin-block-start: var(--space-5);
+  color: rgba(28, 26, 23, 0.68);
+  font-size: 0.85rem;
+  font-style: italic;
+  max-width: 52ch;
+}
+
+.about-figure {
+  justify-self: center;
+}
+
+.about-orbit {
+  width: min(280px, 60vw);
+  color: var(--color-teal);
+}
+
+.about-orbit-ring {
+  fill: none;
+  stroke: var(--color-teal);
+  stroke-width: 1.2;
+  opacity: 0.35;
+}
+
+.about-orbit-ring--sand {
+  stroke: var(--color-sand);
+  opacity: 0.9;
+}
+
+.about-orbit-node {
+  fill: var(--color-teal);
+}
+
+.about-orbit-node--amber {
+  fill: var(--color-amber);
+}
+
+.about-orbit-node--maroon {
+  fill: var(--color-maroon);
+}
+
+@media (min-width: 900px) {
+  .about-inner {
+    grid-template-columns: 1.2fr 0.8fr;
+  }
+}
+
+/* ---------- Activities ---------- */
+.activities {
+  background: var(--color-sand);
+}
+
+.activity-grid {
+  margin-block-start: var(--space-7);
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: 1fr;
+}
+
+.activity-card {
+  background: var(--color-cream);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6) var(--space-5);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+}
+
+.activity-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+
+.activity-card-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.activity-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  color: var(--color-teal);
+}
+
+.activity-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Volunteering is called out in maroon — the palette's one "highlight" role,
+   reserved for this single achievement/impact moment rather than spread across
+   all four cards. */
+.activity-card:nth-child(3) .activity-icon {
+  color: var(--color-maroon);
+}
+
+.activity-card h3 {
+  font-size: 1.15rem;
+}
+
+.activity-card p {
+  color: rgba(28, 26, 23, 0.72);
+  font-size: 0.95rem;
+}
+
+@media (min-width: 560px) {
+  .activity-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1000px) {
+  .activity-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ---------- Podcast ---------- */
+.podcast {
+  background: linear-gradient(165deg, var(--color-teal) 0%, var(--color-teal-dark) 100%);
+  color: var(--color-ink-on-teal);
+}
+
+.podcast-inner {
+  display: grid;
+  gap: var(--space-7);
+  align-items: center;
+}
+
+.podcast-thumb-placeholder {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md);
+  border: 0;
+  padding: 0;
+  background-color: var(--color-teal-dark);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.podcast-thumb-placeholder::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(9, 27, 31, 0.25);
+  transition: background-color 0.2s var(--ease-out);
+}
+
+.podcast-thumb-placeholder:hover::before {
+  background: rgba(9, 27, 31, 0.4);
+}
+
+.play-button {
+  position: relative;
+  z-index: 1;
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  background: var(--color-amber);
+  color: var(--color-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.2s var(--ease-out);
+}
+
+.podcast-thumb-placeholder:hover .play-button {
+  transform: scale(1.08);
+}
+
+.play-button svg {
+  width: 24px;
+  height: 24px;
+}
+
+.podcast-intro {
+  margin-block-start: var(--space-4);
+  color: var(--color-ink-on-teal-muted);
+  font-size: 1.05rem;
+}
+
+.podcast-episode-title {
+  margin-block-start: var(--space-6);
+  margin-block-end: var(--space-6);
+  font-size: 1.4rem;
+}
+
+@media (min-width: 900px) {
+  .podcast-inner {
+    grid-template-columns: 0.85fr 1.15fr;
+  }
+}
+
+/* ---------- Contact ---------- */
+.contact {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-cream);
+}
+
+/* Light-ground companion to the hero wallpaper, supplied by the client —
+   kept faint since it sits directly behind readable copy. */
+.contact::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../assets/images/pattern-light.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.contact-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: var(--space-8);
+}
+
+.contact-copy p {
+  margin-block-start: var(--space-4);
+  color: rgba(28, 26, 23, 0.75);
+}
+
+.contact-subheading {
+  margin-block-start: var(--space-7);
+  margin-block-end: var(--space-4);
+  font-size: 1.05rem;
+}
+
+.social-list {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.social-list a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--color-teal);
+  color: var(--color-ink-on-teal);
+  transition: transform 0.2s var(--ease-out), background-color 0.2s var(--ease-out);
+}
+
+.social-list a:hover {
+  background: var(--color-amber);
+  color: var(--color-ink);
+  transform: translateY(-3px);
+}
+
+.social-list svg {
+  width: 20px;
+  height: 20px;
+}
+
+.form-embed {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  background: var(--color-sand);
+  padding: var(--space-3);
+}
+
+.form-embed iframe {
+  width: 100%;
+  min-height: 520px;
+  border: 0;
+  display: block;
+  border-radius: calc(var(--radius-lg) - var(--space-3));
+}
+
+.form-fallback-link {
+  display: inline-block;
+  margin-block-start: var(--space-4);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-teal);
+  border-bottom: 1px solid currentColor;
+}
+
+.form-fallback-link:hover {
+  color: var(--color-amber-dark);
+}
+
+@media (min-width: 900px) {
+  .contact-inner {
+    grid-template-columns: 0.85fr 1.15fr;
+  }
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background: var(--color-teal-dark);
+  color: var(--color-ink-on-teal);
+  padding-block: var(--space-7);
+}
+
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-6);
+}
+
+.social-list--footer a {
+  background: rgba(250, 247, 242, 0.1);
+}
+
+.social-list--footer a:hover {
+  background: var(--color-amber);
+  color: var(--color-ink);
+}
+
+.footer-fine-print {
+  border-block-start: 1px solid rgba(250, 247, 242, 0.16);
+  padding-block-start: var(--space-5);
+  width: 100%;
+}
+
+.footer-disclaimer {
+  font-size: 0.85rem;
+  color: var(--color-ink-on-teal-muted);
+  max-width: 56ch;
+  margin-bottom: var(--space-2);
+}
+
+.footer-copyright {
+  font-size: 0.8rem;
+  color: rgba(243, 239, 231, 0.55);
+}
+
+.footer-version {
+  font-size: 0.7rem;
+  color: rgba(243, 239, 231, 0.35);
+  font-family: var(--font-body-en);
+  margin-block-start: var(--space-1);
+}
+
+@media (min-width: 700px) {
+  .footer-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .footer-fine-print {
+    border-block-start: 0;
+    padding-block-start: 0;
+    width: auto;
+    text-align: end;
+  }
+}
