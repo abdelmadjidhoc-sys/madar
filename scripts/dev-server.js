@@ -82,9 +82,14 @@ var server = http.createServer(async (req, res) => {
   var url = new URL(req.url, "http://localhost");
   var pathname = url.pathname;
 
-  // Same rewrite as vercel.json
+  // Same rewrites as vercel.json
   if (pathname === "/adminmadar") {
     serveStatic(req, res, "/adminmadar.html");
+    return;
+  }
+
+  if (pathname === "/links") {
+    serveStatic(req, res, "/links.html");
     return;
   }
 

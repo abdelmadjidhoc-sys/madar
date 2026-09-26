@@ -30,7 +30,7 @@ window.MADAR_CONTENT = {
     },
     hero: {
       tagline: "مدار .. حيث تدور الفرص",
-      headline: "فرصتك تبدأ من هنا",
+      headline: "المرجع الأول للشباب في دولة قطر",
       subhead:
         "مدار منصة تجمع الفرص التعليمية والتطويرية والتطوعية في مكان واحد لشباب قطر.",
       cta: "استكشف الأنشطة",
@@ -39,29 +39,101 @@ window.MADAR_CONTENT = {
     about: {
       heading: "معلومة واضحة، مصدر موثوق، وطريق مباشر للمشاركة",
       body:
-        "مدار منصة إعلامية موجهة لشباب قطر بين 15 و39 عامًا، تجمع الفرص التعليمية والتطويرية والتطوعية في مكان واحد، وتنظمها بحسب الاهتمام ومرحلة الحياة. رسالتنا بسيطة: معلومة يسهل فهمها، مصدر واضح لكل فرصة، وطريق مباشر لخطوة أولى حقيقية.",
+        "مدار منصة إعلامية موجهة لشباب قطر بين 15 و39 عامًا، تجمع الفرص التعليمية والتطويرية والتطوعية في مكان واحد، وتنظمها بحسب الاهتمام ومرحلة الحياة. رسالتنا بسيطة: معلومة يسهل فهمها، مصدر واضح لكل فرصة، وطريق مباشر لخطوة أولى حقيقية. وننقل الأخبار التي تهم الشباب والمهتمين بالأمور الإعلامية التي تخص الشباب.",
       disclaimer:
         "يستلهم مدار توجه رؤية قطر الوطنية 2030، لكنه منصة مستقلة، وليس جهة رسمية تابعة لها أو شريكًا معتمدًا من مؤسساتها.",
     },
+    story: {
+      heading: "قصة بداية مدار",
+      body: "TODO: أضف هنا قصة بداية مدار — كيف بدأت الفكرة، ومن أطلقها، وما الذي دفعهم لتأسيس المنصة.",
+    },
     activities: {
-      heading: "أربعة مسارات، فرصة واحدة تبدأ بها",
+      heading: "مسارات متعددة، فرصة واحدة تبدأ بها",
       items: [
         {
-          title: "فعاليات",
-          desc: "فعاليات نجمعها لك من كل مكان في قطر، من ورش العمل إلى المؤتمرات.",
+          title: "برامج إعلامية",
+          desc: "نقدم برامج إعلامية أسبوعية عبر إنستقرام وتيك توك، محتوى قصير وسريع يواكب اهتمامات الشباب أينما كانوا. فيديوهات ونبذات يومية تنقل لكم آخر المستجدات بأسلوب بسيط وممتع، يواكب إيقاع حياتكم اليومية.",
         },
         {
           title: "تعليم",
-          desc: "برامج تعليمية ومنح ودورات تطوّر مهاراتك خطوة بخطوة.",
+          desc: "برامج تعليمية ومنح ودورات تطوّر مهاراتك خطوة بخطوة. محتوى تدريبي متنوع يغطي مجالات مختلفة، يساعدك على اكتساب مهارات جديدة والتقدم في مسيرتك المهنية والشخصية.",
         },
         {
-          title: "تطوع",
-          desc: "برامج تطوعية لصناعة الأثر.",
+          title: "فعاليات",
+          desc: "ننظم ورش عمل ومؤتمرات، ونجمع لك أيضًا فعاليات من كل مكان في قطر من العمل إلى المؤتمرات. مناسبات متنوعة تجمع الشباب وتفتح لهم آفاقًا جديدة للتواصل والتعلم.",
+        },
+        {
+          title: "البودكاست",
+          desc: "ننقل لكم إنجازات الشباب القطري عبر حلقات صوتية ومرئية. قصص ملهمة وتجارب حقيقية من شباب حققوا إنجازات في مجالاتهم. لتكون كل حلقة خطوة تقربكم من فرصتكم القادمة.",
+        },
+        {
+          title: "التغطيات",
+          desc: "ننقل لكم المشهد من المكان نفسه، لحظة بلحظة. تغطيات ميدانية للفعاليات والمناسبات التي تهم شباب قطر. لتكونوا قريبين من الحدث حتى لو لم تكونوا حاضرين فيه.",
         },
         {
           title: "فرص",
-          desc: "فرص عمل وتدريب ومبادرات تفتح لك أبوابًا جديدة.",
+          desc: "فرص عمل وتدريب ومبادرات تفتح لك أبوابًا جديدة. إعلانات محدثة باستمرار من جهات موثوقة، تساعدك على اتخاذ خطوتك القادمة نحو مستقبل مهني أفضل.",
         },
+      ],
+    },
+    founders: {
+      heading: "المؤسسين",
+      items: [
+        {
+          name: "السيد/ سعود عبدالعزيز الهيدوس",
+          bio: "الرئيس التنفيذي",
+          achievements: [
+            "ناشط في العمل الشبابي والبيئي.",
+            "مدرب معتمد حاصل على شهادة (TOT).",
+            "الفوز بالمركز الأول في برنامج جيل مبادر.",
+            "الفوز في هاكاثون بالمركزين الأول والثاني لاختراع ابتكارات تخدم أهداف التنمية المستدامة والرقمنة.",
+            "تمثيل دولة قطر في محافل محلية ودولية شبابية.",
+          ],
+        },
+        {
+          name: "الأستاذ/ صالح محمد العبيدلي",
+          bio: "رئيس الفعاليات والبرامج",
+          achievements: [
+            "ناشط في العمل الشبابي والتطوعي والمسؤولية المجتمعية.",
+            "تقلّد عددًا من المناصب القيادية في الأجهزة واللجان الشبابية ببعض الأندية الرياضية القطرية.",
+            "الإسهام في تنفيذ العديد من المبادرات والفعاليات المجتمعية.",
+            "تحقيق المركز الأول على مستوى اللجان والأجهزة الشبابية ثلاث مرات، تقديرًا للبرامج والمبادرات المنفذة.",
+          ],
+        },
+        {
+          name: "الأستاذة/ خلود فضل البوعينين",
+          bio: "رئيس التطوير والابتكار",
+          achievements: [
+            "قيادة فرق العمل وإدارة المشاريع.",
+            "متخصصة في مجال العلاقات العامة وإعداد وتنفيذ الاستراتيجيات وإدارة السمعة المؤسسية.",
+            "تحليل البيانات باستخدام Power BI لدعم اتخاذ القرار.",
+            "متخصصة في تمكين الشباب الرقمي وتصميم وتنفيذ البرامج الشبابية.",
+            "تنظيم الفعاليات الرسمية وبناء العلاقات مع وسائل الإعلام وأصحاب المصلحة.",
+          ],
+        },
+        {
+          name: "السيد/ ظاهر ناصر الناصر",
+          bio: "رئيس العلاقات والإعلام",
+          achievements: [
+            "ناشط في المجال الشبابي والقيادي.",
+            "خريج شؤون دولية (خريف 2026) - جامعة قطر.",
+            "خريج برنامج مندوبي قطر الشباب للأمم المتحدة.",
+            "خريج برنامج أسفار جامعة قطر للتمثيل الدولي.",
+            "خريج برنامج قيادات - جامعة قطر.",
+            "تمثيلات داخلية وخارجية.",
+          ],
+        },
+      ],
+    },
+    partnerships: {
+      heading: "الشراكات",
+    },
+    stats: {
+      heading: "مدار بالأرقام",
+      items: [
+        { value: 12, suffix: "", label: "عدد التغطيات الإعلامية" },
+        { value: 37, suffix: "K+", label: "عدد المشاهدات على التغطيات" },
+        { value: 20, suffix: "+", label: "عدد الجهات الإعلامية التي تعاونّا معها" },
       ],
     },
     podcast: {
@@ -72,6 +144,23 @@ window.MADAR_CONTENT = {
       thumbAlt: "صورة من حلقة بودكاست مدار مع محمد القصابي",
       cta: "شاهد على يوتيوب",
     },
+    news: {
+      heading: "أخبار مدار",
+      items: [
+        {
+          title: "حملة تنظيف شاطئ الوكرة مع المتطوعات",
+          excerpt: "الجهاز الشبابي بنادي الوكرة",
+        },
+        {
+          title: "جلسة حوارية تفاعلية: في أي زمن نعيش؟!",
+          excerpt: "تغطية مدار لأحد اللقاءات الحوارية.",
+        },
+        {
+          title: "الملتقى الثاني \"بالعربي\" – فعاليات مؤسسة قطر",
+          excerpt: "تغطية مدار لفعاليات مؤسسة قطر.",
+        },
+      ],
+    },
     contact: {
       heading: "لنبقَ على تواصل",
       intro:
@@ -79,6 +168,20 @@ window.MADAR_CONTENT = {
       socialHeading: "تابعونا",
       formHeading: "أرسل طلبك",
       formIntro: "الاستمارة تستغرق أقل من دقيقتين، وسيتواصل معك فريقنا خلال أيام قليلة.",
+    },
+    linksPage: {
+      metaTitle: "روابطنا | مدار",
+      metaDescription: "كل روابط مدار في مكان واحد.",
+      backLink: "العودة إلى الموقع",
+      name: "منصّة مدار",
+      bio: "مدار … المرجع الأول للشباب في دولة قطر. منصة إعلامية متخصصة في القطاع الشبابي، تهدف إلى تمكين الشباب وتسهيل وصولهم إلى الفرص التطويرية.",
+      featuredLabel: "طلب جلسة توجيهية",
+      channelLabel: "قناة ( منصة مدار )",
+      instagramLabel: "Instagram",
+      tiktokLabel: "TikTok",
+      youtubeLabel: "Youtube",
+      threadsLabel: "Threads",
+      emailLabel: "Email",
     },
     sessionPage: {
       metaTitle: "طلب جلسة توجيه | مدار",
@@ -125,6 +228,9 @@ window.MADAR_CONTENT = {
     footer: {
       disclaimer:
         "مدار منصة مستقلة تدعم توجه رؤية قطر الوطنية 2030، وليست جهة رسمية تابعة لها.",
+      ipHeading: "الملكية الفكرية",
+      ipText:
+        "جميع الحقوق الفكرية لمنصة مدار، بما في ذلك الشعار والمحتوى والتصاميم والبرامج الإعلامية المقدمة عبر الموقع ومنصات التواصل الاجتماعي، محفوظة ومرخصة من الجهات المعنية في دولة قطر. يُمنع إعادة استخدام أو نسخ أو توزيع أي جزء من محتوى المنصة دون إذن مسبق.",
       copyright: "© {year} مدار. جميع الحقوق محفوظة.",
     },
   },
@@ -148,7 +254,7 @@ window.MADAR_CONTENT = {
     },
     hero: {
       tagline: "Madar — where opportunity orbits", // DRAFT
-      headline: "Your opportunity starts here", // DRAFT
+      headline: "The first reference for youth in the State of Qatar", // DRAFT
       subhead:
         "Madar brings Qatar youth's educational, development, and volunteer opportunities together in one place.", // DRAFT
       cta: "Explore Activities",
@@ -157,29 +263,101 @@ window.MADAR_CONTENT = {
     about: {
       heading: "Clear information, a visible source, a direct way in", // DRAFT
       body:
-        "Madar is a media platform for Qatar's youth, ages 15 to 39. We gather educational, development, and volunteer opportunities in one place, organized by interest and life stage. Our mission is simple: information that's easy to understand, a clear source behind every opportunity, and a direct path to a real first step.", // DRAFT
+        "Madar is a media platform for Qatar's youth, ages 15 to 39. We gather educational, development, and volunteer opportunities in one place, organized by interest and life stage. Our mission is simple: information that's easy to understand, a clear source behind every opportunity, and a direct path to a real first step. We also share news that matters to youth and to anyone interested in youth-related media.", // DRAFT
       disclaimer:
         "Madar draws on the direction of Qatar National Vision 2030, but is an independent platform — not an official affiliate or approved partner of its entities.", // DRAFT
     },
+    story: {
+      heading: "The Story of How Madar Began", // DRAFT
+      body: "TODO: Add Madar's founding story here — how the idea started, who launched it, and what motivated them to create the platform.",
+    },
     activities: {
-      heading: "Four tracks, one place to start", // DRAFT
+      heading: "Multiple tracks, one place to start", // DRAFT
       items: [
         {
-          title: "Events",
-          desc: "Events we track across Qatar, from workshops to conferences.", // DRAFT
+          title: "Media Programs", // DRAFT
+          desc: "Weekly media programs across Instagram and TikTok — short, fast content that keeps pace with youth interests wherever they are. Daily videos and clips bringing you the latest, in a simple, enjoyable style that fits your everyday rhythm.", // DRAFT
         },
         {
           title: "Education",
-          desc: "Educational programs, scholarships, and courses that build your skills step by step.", // DRAFT
+          desc: "Educational programs, scholarships, and courses that build your skills step by step. Varied training content covering different fields, helping you gain new skills and advance in your career and personal path.", // DRAFT
         },
         {
-          title: "Volunteering",
-          desc: "Volunteer programs that make an impact.", // DRAFT
+          title: "Events",
+          desc: "We organize workshops and conferences, and also gather events from across Qatar, from workplaces to conferences. Varied occasions that bring youth together and open new horizons for connection and learning.", // DRAFT
+        },
+        {
+          title: "Podcast",
+          desc: "We share the achievements of Qatar's youth through audio and video episodes. Inspiring stories and real experiences from young people who've achieved in their fields. Every episode is a step closer to your own next opportunity.", // DRAFT
+        },
+        {
+          title: "Coverage",
+          desc: "We bring you the scene from where it happens, moment by moment. On-the-ground coverage of the events and occasions that matter to Qatar's youth. So you stay close to what's happening, even if you couldn't be there.", // DRAFT
         },
         {
           title: "Opportunities",
-          desc: "Jobs, internships, and initiatives that open new doors.", // DRAFT
+          desc: "Jobs, internships, and initiatives that open new doors. Regularly updated listings from trusted sources, helping you take your next step toward a better professional future.", // DRAFT
         },
+      ],
+    },
+    founders: {
+      heading: "Founders", // DRAFT
+      items: [
+        {
+          name: "Mr. Saud Abdulaziz Al-Haidous", // DRAFT (name transliteration)
+          bio: "Chief Executive Officer",
+          achievements: [
+            "Active in youth and environmental work.", // DRAFT
+            "Certified trainer (TOT certificate holder).", // DRAFT
+            "Won first place in the \"Jeel Mubadir\" program.", // DRAFT
+            "Won 1st and 2nd place in a hackathon for innovations serving sustainable development and digitalization goals.", // DRAFT
+            "Represented Qatar in local and international youth forums.", // DRAFT
+          ],
+        },
+        {
+          name: "Mr. Saleh Mohammed Al-Obaidli", // DRAFT (name transliteration)
+          bio: "Head of Events & Programs",
+          achievements: [
+            "Active in youth work, volunteering, and community responsibility.", // DRAFT
+            "Held several leadership positions in youth bodies and committees at some Qatari sports clubs.", // DRAFT
+            "Contributed to implementing numerous community initiatives and events.", // DRAFT
+            "Ranked first among youth committees and bodies three times, in recognition of the programs and initiatives delivered.", // DRAFT
+          ],
+        },
+        {
+          name: "Ms. Kholoud Fadel Al-Buainain", // DRAFT (name transliteration)
+          bio: "Head of Development & Innovation",
+          achievements: [
+            "Leads teams and manages projects.", // DRAFT
+            "Specialized in public relations, strategy development and execution, and reputation management.", // DRAFT
+            "Analyzes data using Power BI to support decision-making.", // DRAFT
+            "Specialized in digital youth empowerment and designing and delivering youth programs.", // DRAFT
+            "Organizes official events and builds relationships with media outlets and stakeholders.", // DRAFT
+          ],
+        },
+        {
+          name: "Mr. Zaher Nasser Al-Nasser", // DRAFT (name transliteration)
+          bio: "Head of Relations & Media",
+          achievements: [
+            "Active in youth and leadership work.", // DRAFT
+            "Graduate of International Affairs (Fall 2026) — Qatar University.", // DRAFT
+            "Graduate of the Qatar Youth Delegates to the United Nations program.", // DRAFT
+            "Graduate of Qatar University's Asfar program for international representation.", // DRAFT
+            "Graduate of the Qiyadat (Leadership) program — Qatar University.", // DRAFT
+            "Internal and external representation experience.", // DRAFT
+          ],
+        },
+      ],
+    },
+    partnerships: {
+      heading: "Partnerships", // DRAFT
+    },
+    stats: {
+      heading: "Madar in Numbers", // DRAFT
+      items: [
+        { value: 12, suffix: "", label: "Media coverages" }, // DRAFT
+        { value: 37, suffix: "K+", label: "Views on our coverage" }, // DRAFT
+        { value: 20, suffix: "+", label: "Media outlets we've partnered with" }, // DRAFT
       ],
     },
     podcast: {
@@ -191,6 +369,23 @@ window.MADAR_CONTENT = {
       thumbAlt: "Still from the Madar podcast episode with Mohammed Al Qasabi",
       cta: "Watch on YouTube",
     },
+    news: {
+      heading: "Madar News", // DRAFT
+      items: [
+        {
+          title: "Al Wakrah Beach Cleanup Campaign with Volunteers", // DRAFT
+          excerpt: "Al Wakrah Club Youth Apparatus", // DRAFT
+        },
+        {
+          title: "Interactive Dialogue Session: What Era Are We Living In?!", // DRAFT
+          excerpt: "Madar's coverage of one of the dialogue sessions.", // DRAFT
+        },
+        {
+          title: "The Second \"Bil-Arabi\" Forum – Qatar Foundation Events", // DRAFT
+          excerpt: "Madar's coverage of Qatar Foundation's events.", // DRAFT
+        },
+      ],
+    },
     contact: {
       heading: "Let's stay in touch", // DRAFT
       intro:
@@ -198,6 +393,20 @@ window.MADAR_CONTENT = {
       socialHeading: "Follow along",
       formHeading: "Send your request",
       formIntro: "Takes less than two minutes — our team will get back to you within a few days.", // DRAFT
+    },
+    linksPage: {
+      metaTitle: "Our Links | Madar", // DRAFT
+      metaDescription: "All of Madar's links in one place.", // DRAFT
+      backLink: "Back to the site",
+      name: "Madar Platform", // DRAFT
+      bio: "Madar … the first reference for youth in the State of Qatar. A media platform specialized in the youth sector, aiming to empower youth and ease their access to development opportunities.", // DRAFT
+      featuredLabel: "Book a guidance session",
+      channelLabel: "Channel (Madar Platform)", // DRAFT
+      instagramLabel: "Instagram",
+      tiktokLabel: "TikTok",
+      youtubeLabel: "Youtube",
+      threadsLabel: "Threads",
+      emailLabel: "Email",
     },
     sessionPage: {
       metaTitle: "Book a Guidance Session | Madar", // DRAFT
@@ -244,6 +453,9 @@ window.MADAR_CONTENT = {
     footer: {
       disclaimer:
         "Madar is an independent platform that supports the direction of Qatar National Vision 2030. It is not an official affiliate of its entities.", // DRAFT
+      ipHeading: "Intellectual Property", // DRAFT
+      ipText:
+        "All intellectual property rights of the Madar platform — including its logo, content, designs, and media programs presented through the website and social media platforms — are reserved and licensed by the relevant authorities in the State of Qatar. Reuse, copying, or distribution of any part of the platform's content without prior permission is prohibited.", // DRAFT
       copyright: "© {year} Madar. All rights reserved.",
     },
   },
@@ -261,6 +473,7 @@ window.MADAR_LINKS = {
   youtube: "https://youtube.com/channel/UCgxiJUU1tuS0K5OEoc7HApA",
   threads: "https://www.threads.net/@madar_qat",
   googleForm: "https://forms.gle/UHVrdyENZ5YkHgwN9",
+  email: "qamadar@gmail.com",
 };
 
 /** Featured podcast episode (Madar's own channel). */

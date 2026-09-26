@@ -3,3 +3,8 @@ node_modules/
 .env
 .env.local
 .vercel
+
+# Raw/unprocessed source photos dropped in for editing — the versions
+# actually used by the site are the resized/cropped copies in
+# assets/images/founders/ and assets/images/news/, which are tracked.
+/images/

@@ -267,6 +267,20 @@ html[dir="rtl"] .icon-arrow--back {
   transform: translateY(-2px);
 }
 
+/* On teal sections, the default teal-on-teal outline would be nearly
+   invisible — swap to light ink so the border/text read against the gradient. */
+.hero-actions .btn--outline,
+.podcast .btn--outline {
+  border-color: var(--color-ink-on-teal);
+  color: var(--color-ink-on-teal);
+}
+
+.hero-actions .btn--outline:hover,
+.podcast .btn--outline:hover {
+  background: var(--color-ink-on-teal);
+  color: var(--color-teal-dark);
+}
+
 /* ---------- Logo ----------
    logo-on-dark.svg is the cream/amber lockup, built for teal fields (header,
    hero, footer all qualify). If a section with a cream/light background ever
@@ -448,9 +462,10 @@ html[lang="en"] .lang-toggle {
 }
 
 /* The photo's dense dot-pattern/glow sits on its own left edge, which is the
-   empty (non-text) side in RTL by default. Flip it in LTR so that busy side
-   stays opposite the reading text there too, under the orbit motif. */
-html[dir="ltr"] .hero-photo-flip {
+   reading-text side in LTR by default. Flip it in RTL so that busy side
+   stays on the reading-text side there too (the orbit motif takes the other,
+   empty side — see .hero-orbit below). */
+html[dir="rtl"] .hero-photo-flip {
   transform: scaleX(-1);
 }
 
@@ -482,13 +497,14 @@ html[dir="ltr"] .hero-photo-flip {
   background: linear-gradient(to top, rgba(9, 27, 31, 0.6), rgba(9, 27, 31, 0.25) 45%, rgba(9, 27, 31, 0.45) 100%);
 }
 
-/* Logical position: the ring stays on the SAME side as the reading text in
-   both languages (inline-start), mirroring together as one composition. Only
-   the wallpaper photo (.hero-photo) flips independently so its busy side
-   stays opposite the text — see the transform rule below. */
+/* Logical position: the ring stays on the OPPOSITE side from the reading
+   text in both languages (inline-end), mirroring together as one
+   composition. The wallpaper photo's dense dot-pattern (.hero-photo) flips
+   independently so its busy side stays on the text side instead — see the
+   transform rule above. */
 .hero-orbit {
   position: absolute;
-  inset-inline-start: -18%;
+  inset-inline-end: -18%;
   top: 50%;
   transform: translateY(-50%);
   width: min(760px, 90vw);
@@ -558,6 +574,13 @@ html[dir="ltr"] .hero-photo-flip {
   margin-bottom: var(--space-7);
 }
 
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
 /* ---------- Reveal-on-scroll (the page's one authored motion moment,
    orchestrated once rather than scattered per-element effects) ---------- */
 [data-reveal] {
@@ -624,9 +647,24 @@ section h2 {
   }
 }
 
+/* ---------- Story ----------
+   Stays cream like About right above it (the one other accepted repeat in
+   the cream/teal alternation, besides Contact→Footer) — the two read as one
+   continuous "who we are / how we started" narrative before Activities
+   resumes the rhythm. */
+.story {
+  background: var(--color-cream);
+}
+
+.story p {
+  margin-block-start: var(--space-5);
+  color: rgba(28, 26, 23, 0.75);
+}
+
 /* ---------- Activities ---------- */
 .activities {
-  background: var(--color-sand);
+  background: linear-gradient(165deg, var(--color-teal) 0%, var(--color-teal-dark) 100%);
+  color: var(--color-ink-on-teal);
 }
 
 .activity-grid {
@@ -671,14 +709,8 @@ section h2 {
   height: 24px;
 }
 
-/* Volunteering is called out in maroon — the palette's one "highlight" role,
-   reserved for this single achievement/impact moment rather than spread across
-   all four cards. */
-.activity-card:nth-child(3) .activity-icon {
-  color: var(--color-maroon);
-}
-
 .activity-card h3 {
+  color: var(--color-ink);
   font-size: 1.15rem;
 }
 
@@ -695,7 +727,196 @@ section h2 {
 
 @media (min-width: 1000px) {
   .activity-grid {
+    /* 6 cards, 2 even rows of 3. */
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ---------- Founders ---------- */
+.founders {
+  background: var(--color-cream);
+}
+
+.founders-grid {
+  margin-block-start: var(--space-7);
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: 1fr;
+}
+
+/* Full-bleed photo card: image fills the frame, name/title sit over a
+   bottom gradient scrim rather than below the photo in their own space. */
+.founder-card {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-teal-dark);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+}
+
+.founder-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+
+.founder-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 15%;
+  transition: opacity 0.3s var(--ease-out);
+}
+
+/* On hover/focus (desktop) or tap (touch, via the .is-active class main.js
+   toggles), the photo fades back to the card's dark teal fill so the
+   achievement list reads clearly; the name/title stay put at the bottom. */
+.founder-card:hover .founder-photo,
+.founder-card:focus-within .founder-photo,
+.founder-card.is-active .founder-photo {
+  opacity: 0.1;
+}
+
+.founder-achievements {
+  position: absolute;
+  inset: 0;
+  inset-block-end: 84px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5em;
+  margin: 0;
+  padding: var(--space-5) var(--space-4);
+  padding-inline-start: calc(var(--space-4) + 1.1em);
+  list-style: disc;
+  overflow-y: auto;
+  color: var(--color-ink-on-teal);
+  font-size: 0.72rem;
+  line-height: 1.4;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease-out);
+}
+
+.founder-achievements li::marker {
+  color: var(--color-amber);
+}
+
+.founder-card:hover .founder-achievements,
+.founder-card:focus-within .founder-achievements,
+.founder-card.is-active .founder-achievements {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.founder-info {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  z-index: 1;
+  padding: var(--space-4);
+  text-align: start;
+}
+
+.founder-card h3 {
+  color: var(--color-ink-on-teal);
+  font-size: 1rem;
+  text-shadow: 0 1px 4px rgba(9, 27, 31, 0.85), 0 1px 12px rgba(9, 27, 31, 0.6);
+}
+
+.founder-card p {
+  margin-block-start: var(--space-2);
+  color: var(--color-amber);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-shadow: 0 1px 4px rgba(9, 27, 31, 0.85), 0 1px 12px rgba(9, 27, 31, 0.6);
+}
+
+@media (min-width: 560px) {
+  .founders-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1000px) {
+  .founders-grid {
     grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ---------- Partnerships ---------- */
+.partnerships {
+  background: linear-gradient(165deg, var(--color-teal) 0%, var(--color-teal-dark) 100%);
+  color: var(--color-ink-on-teal);
+}
+
+.partner-grid {
+  margin-block-start: var(--space-7);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-6);
+}
+
+/* Placeholder logo slots — plain circles until real partner logos are
+   supplied (see the TODO comment above this section in index.html). */
+.partner-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--color-sand);
+  color: var(--color-teal);
+}
+
+.partner-logo svg {
+  width: 36px;
+  height: 36px;
+  opacity: 0.6;
+}
+
+/* ---------- Stats ---------- */
+.stats {
+  background: var(--color-cream);
+  text-align: center;
+}
+
+.stats h2 {
+  text-align: center;
+}
+
+.stats-grid {
+  margin-block-start: var(--space-7);
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: 1fr;
+}
+
+.stat-number {
+  color: var(--color-amber-dark);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 4vw + 1rem, 3.5rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-label {
+  margin-block-start: var(--space-2);
+  color: rgba(28, 26, 23, 0.72);
+  font-size: 0.95rem;
+}
+
+@media (min-width: 700px) {
+  .stats-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -782,15 +1003,74 @@ section h2 {
   }
 }
 
+/* ---------- News ---------- */
+.news {
+  background: var(--color-cream);
+}
+
+.news-grid {
+  margin-block-start: var(--space-7);
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: 1fr;
+}
+
+.news-card {
+  background: var(--color-sand);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+}
+
+.news-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Placeholder thumbnail — plain tile until real article photos are
+   supplied (see the TODO comment above this section in index.html). */
+.news-thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--color-teal);
+}
+
+.news-card h3 {
+  margin: var(--space-5) var(--space-5) 0;
+  font-size: 1.1rem;
+}
+
+.news-card p {
+  margin: var(--space-3) var(--space-5) var(--space-5);
+  color: rgba(28, 26, 23, 0.72);
+  font-size: 0.9rem;
+}
+
+@media (min-width: 560px) {
+  .news-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1000px) {
+  .news-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 /* ---------- Contact ---------- */
 .contact {
   position: relative;
   overflow: hidden;
-  background: var(--color-cream);
+  background: linear-gradient(165deg, var(--color-teal) 0%, var(--color-teal-dark) 100%);
+  color: var(--color-ink-on-teal);
 }
 
 /* Light-ground companion to the hero wallpaper, supplied by the client —
-   kept faint since it sits directly behind readable copy. */
+   kept very faint here since the section ground is now dark, not cream. */
 .contact::before {
   content: "";
   position: absolute;
@@ -798,7 +1078,7 @@ section h2 {
   background-image: url("../assets/images/pattern-light.png");
   background-size: cover;
   background-position: center;
-  opacity: 0.6;
+  opacity: 0.12;
   pointer-events: none;
 }
 
@@ -811,7 +1091,7 @@ section h2 {
 
 .contact-copy p {
   margin-block-start: var(--space-4);
-  color: rgba(28, 26, 23, 0.75);
+  color: var(--color-ink-on-teal-muted);
 }
 
 .contact-subheading {
@@ -832,7 +1112,7 @@ section h2 {
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  background: var(--color-teal);
+  background: rgba(250, 247, 242, 0.14);
   color: var(--color-ink-on-teal);
   transition: transform 0.2s var(--ease-out), background-color 0.2s var(--ease-out);
 }
@@ -1062,4 +1342,156 @@ section h2 {
   color: rgba(28, 26, 23, 0.7);
   max-width: 62ch;
   margin-bottom: var(--space-7);
+}
+
+/* ---------- Links page (linktr.ee/madar.qa mirror) ---------- */
+.links-page {
+  min-height: 100vh;
+  background: linear-gradient(165deg, var(--color-teal) 0%, var(--color-teal-dark) 100%);
+  color: var(--color-ink-on-teal);
+  padding-block: var(--space-7) var(--space-9);
+}
+
+.container--links {
+  max-width: 480px;
+}
+
+.links-page .session-back-link {
+  color: var(--color-ink-on-teal-muted);
+}
+
+.links-page .session-back-link:hover {
+  color: var(--color-amber-on-teal);
+}
+
+.links-profile {
+  text-align: center;
+  margin-block-end: var(--space-7);
+}
+
+.links-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: var(--color-teal-dark);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  margin-bottom: var(--space-5);
+}
+
+.links-avatar img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+
+.links-profile h1 {
+  font-size: 1.3rem;
+  margin-bottom: var(--space-3);
+}
+
+.links-bio {
+  color: var(--color-ink-on-teal-muted);
+  font-size: 0.92rem;
+  max-width: 40ch;
+  margin-inline: auto;
+  margin-bottom: var(--space-5);
+}
+
+.links-social {
+  justify-content: center;
+}
+
+.links-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.link-card-featured {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-teal-dark);
+  border: 1px solid rgba(250, 247, 242, 0.16);
+  transition: transform 0.2s var(--ease-out);
+}
+
+.link-card-featured:hover {
+  transform: translateY(-3px);
+}
+
+.link-card-featured img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  padding: var(--space-6);
+  background: var(--color-teal-dark);
+}
+
+.link-card-featured span {
+  padding: var(--space-4);
+  text-align: center;
+  color: var(--color-amber-on-teal);
+  font-weight: 600;
+  border-block-start: 1px solid rgba(250, 247, 242, 0.16);
+}
+
+.link-button {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-lg);
+  background: rgba(250, 247, 242, 0.06);
+  border: 1px solid rgba(250, 247, 242, 0.2);
+  color: var(--color-amber-on-teal);
+  font-weight: 600;
+  transition: background-color 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+}
+
+.link-button:hover {
+  background: rgba(250, 247, 242, 0.12);
+  transform: translateY(-2px);
+}
+
+.link-button-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--color-teal-dark);
+}
+
+.link-button-icon img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+
+.link-button-icon--brand svg {
+  width: 18px;
+  height: 18px;
+  color: var(--color-ink-on-teal);
+}
+
+.link-button-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: start;
+}
+
+.link-button-text small {
+  color: var(--color-ink-on-teal-muted);
+  font-weight: 400;
+  font-size: 0.78rem;
 }

@@ -115,6 +115,29 @@
     });
   }
 
+  function initFounderCards() {
+    var cards = document.querySelectorAll(".founder-card");
+    if (!cards.length) return;
+
+    cards.forEach(function (card) {
+      card.addEventListener("click", function () {
+        var wasActive = card.classList.contains("is-active");
+        cards.forEach(function (other) {
+          other.classList.remove("is-active");
+        });
+        if (!wasActive) card.classList.add("is-active");
+      });
+    });
+
+    document.addEventListener("click", function (event) {
+      if (!event.target.closest(".founder-card")) {
+        cards.forEach(function (card) {
+          card.classList.remove("is-active");
+        });
+      }
+    });
+  }
+
   function initPodcastEmbed() {
     var trigger = document.getElementById("podcastPlay");
     var podcast = window.MADAR_PODCAST;
@@ -238,14 +261,62 @@
     });
   }
 
+  function initStatsCounters() {
+    var numbers = document.querySelectorAll(".stat-number");
+    if (!numbers.length) return;
+
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function animate(el) {
+      var target = parseInt(el.getAttribute("data-count-to"), 10) || 0;
+      var suffix = el.getAttribute("data-suffix") || "";
+      var duration = 1500;
+      var start = null;
+
+      function step(timestamp) {
+        if (start === null) start = timestamp;
+        var progress = Math.min((timestamp - start) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(target * eased) + suffix;
+        if (progress < 1) window.requestAnimationFrame(step);
+      }
+      window.requestAnimationFrame(step);
+    }
+
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      numbers.forEach(function (el) {
+        el.textContent = (el.getAttribute("data-count-to") || "0") + (el.getAttribute("data-suffix") || "");
+      });
+      return;
+    }
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            animate(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    numbers.forEach(function (el) {
+      observer.observe(el);
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     applyLanguage(currentLang());
     initLanguageToggle();
     initMobileNav();
     initSocialLinks();
+    initFounderCards();
     initPodcastEmbed();
     initContactForm();
     initHeaderScrollState();
     initScrollReveal();
+    initStatsCounters();
   });
 })();
