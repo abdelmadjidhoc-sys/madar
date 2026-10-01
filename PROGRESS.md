@@ -196,3 +196,57 @@ kept — cream is an explicitly pinned brand color, and the padding flag was a f
 - You reiterated the cream/teal alternation as a standing rule for every future add/remove of
   a section, not a one-time fix — reworded the `PRODUCT.md` rule to say so explicitly and to
   require re-deriving the whole sequence (not just the one changed spot) each time.
+
+## 2026-10-01 — Join-the-team page
+
+- **New `join.html` page ("انضم إلى فريق منصة مدار")**, also at the clean URL `/join`
+  (`vercel.json` + `scripts/dev-server.js`). Same shell and form styling as `contact.html`,
+  bilingual via `joinPage.*` / `joinForm.*` in `js/content.js` (English is a DRAFT).
+  "Other" (how you heard about Madar) reveals a text field; "Yes" on previous experience
+  reveals the optional experience-details field.
+- **CV upload**: read in the browser as base64 and stored as `BYTEA` in the new
+  `join_applications` table (`npm run setup-db` creates it). Capped at 3 MB, PDF/Word only,
+  so the JSON body stays under Vercel's 4.5 MB function limit — no extra blob storage needed.
+- **`POST /api/join`** (`api/join.js`) validates and saves applications.
+- **Admin panel** (`/adminmadar`) now has two tabs — Session requests / Join applications —
+  backed by `GET /api/admin/applications` (list, `?id=` detail, `?id=&cv=1` CV download).
+
+## 2026-10-01 — Converted to Next.js
+
+The site is now a **Next.js 16 (App Router) app in plain JavaScript** instead of static
+HTML files. Design and content are unchanged: the same stylesheet and copy file were moved
+over as-is.
+
+- **Layout:** `app/(site)/` holds the public pages (`/`, `/contact`, `/join`, `/links`)
+  under one root layout that loads `app/styles.css`. `app/(admin)/adminmadar` has its own
+  root layout with `app/admin.css`, so the two stylesheets never mix.
+- **Components:** each page is built from React components in `components/` (home
+  sections in `components/home/`, shared `SiteHeader`/`SiteFooter`/`FormPage`, the two
+  forms, `LinksPage`, `admin/AdminApp`). The Bootstrap icons are in `components/icons.js`.
+- **Language:** `components/LanguageProvider.js` replaces the old `data-i18n` DOM walk.
+  Components call `t("path.to.key")`, and copy still lives in `lib/content.js`. Arabic is
+  rendered on the server and a saved English preference is applied on load.
+  `DocumentTitle` keeps the browser tab title in the active language.
+- **API:** `api/*.js` are now Next route handlers in `app/api/**/route.js`. URLs, payloads
+  and validation are the same. The Postgres pool is in `lib/db.js`.
+- **Assets** moved to `public/assets/` (URLs unchanged: `/assets/...`).
+- **Removed:** the `.html` pages, `js/main.js`, `js/admin.js`, `scripts/dev-server.js`
+  (`npm run dev` is now `next dev`), and `vercel.json` (Vercel detects Next.js itself).
+  Old links such as `/contact.html` permanently redirect to the clean URLs
+  (`next.config.mjs`).
+- `next dev` auto-generates `AGENTS.md`/`CLAUDE.md` (notes for AI coding tools about
+  Next 16). Next re-creates them, so they can be left in place.
+
+## 2026-10-01 — Admin login
+
+- `/adminmadar` now requires a login. The old "Who's this?" name picker is gone.
+  Logged-out visitors are redirected to `/adminmadar/login`, and the admin APIs return 401.
+- Single admin account, set by environment variables: `ADMIN_USERNAME`, `ADMIN_PASSWORD`,
+  `ADMIN_SESSION_SECRET` (see `.env.example`). If any of the three is missing, nobody
+  can log in.
+- A session is an httpOnly cookie that stays valid for 7 days, signed with HMAC
+  (`lib/auth.js`). No extra packages or database table are needed. `proxy.js` guards the
+  pages and APIs, and each admin API handler and the dashboard page also check the
+  session themselves.
+- **For production:** add the same three variables in Vercel → Settings → Environment
+  Variables before deploying, or the admin panel will be locked for everyone.

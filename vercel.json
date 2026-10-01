@@ -1,6 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/adminmadar", "destination": "/adminmadar.html" },
-    { "source": "/links", "destination": "/links.html" }
-  ]
-}

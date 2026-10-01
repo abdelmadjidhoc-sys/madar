@@ -8,3 +8,5 @@ node_modules/
 # actually used by the site are the resized/cropped copies in
 # assets/images/founders/ and assets/images/news/, which are tracked.
 /images/
+.next/
+next-env.d.ts

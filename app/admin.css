@@ -1,0 +1,401 @@
+/* Madar admin — internal tool, not part of the public brand surface.
+   Reuses the brand palette as flat values (not the public site's token set)
+   since this page never loads styles.css. */
+:root {
+  --admin-teal: #0e5c68;
+  --admin-teal-dark: #093f47;
+  --admin-maroon: #7a1e33;
+  --admin-amber: #e8873a;
+  --admin-sand: #c9bfae;
+  --admin-cream: #faf7f2;
+  --admin-ink: #1c1a17;
+  --admin-border: rgba(28, 26, 23, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--admin-cream);
+  color: var(--admin-ink);
+  font-family: "IBM Plex Sans Arabic", "IBM Plex Sans", "Segoe UI", sans-serif;
+}
+
+html[lang="en"] body {
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+}
+
+/* ---------- Name picker ---------- */
+.admin-picker {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  background: var(--admin-teal-dark);
+  padding: 1.5rem;
+}
+
+.admin-picker[hidden] {
+  display: none;
+}
+
+.admin-picker-logo {
+  width: 140px;
+  height: auto;
+}
+
+.admin-picker-label {
+  color: var(--admin-cream);
+  font-size: 1rem;
+  margin: 0;
+}
+
+.admin-picker-options {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.admin-picker-btn {
+  font: inherit;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.9rem 2rem;
+  border-radius: 999px;
+  border: 0;
+  background: var(--admin-amber);
+  color: var(--admin-ink);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.admin-picker-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ---------- Login ---------- */
+.admin-login {
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: rgba(250, 247, 242, 0.06);
+  border: 1px solid rgba(250, 247, 242, 0.12);
+  border-radius: 16px;
+  padding: 1.75rem 1.5rem;
+}
+
+.admin-login-title {
+  margin: 0;
+  color: var(--admin-cream);
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.admin-login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  color: rgba(250, 247, 242, 0.8);
+  font-size: 0.85rem;
+}
+
+.admin-login-field input {
+  font: inherit;
+  font-size: 0.95rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
+  border: 1.5px solid transparent;
+  background: var(--admin-cream);
+  color: var(--admin-ink);
+}
+
+.admin-login-field input:focus-visible {
+  outline: none;
+  border-color: var(--admin-amber);
+}
+
+.admin-login-error {
+  margin: 0;
+  min-height: 1.2em;
+  color: #f5c08a;
+  font-size: 0.85rem;
+}
+
+.admin-login .admin-picker-btn:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.admin-header {
+  background: var(--admin-teal-dark);
+  padding: 1.25rem 1.5rem;
+}
+
+.admin-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 960px;
+  margin-inline: auto;
+}
+
+.admin-whoami {
+  margin: 0;
+  margin-inline-start: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(250, 247, 242, 0.7);
+  font-size: 0.85rem;
+}
+
+/* Shows the other language name, so it uses that script's font. */
+.admin-lang-toggle {
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--admin-cream);
+  background: transparent;
+  border: 1px solid rgba(250, 247, 242, 0.35);
+  border-radius: 999px;
+  padding: 0.3rem 0.85rem;
+  cursor: pointer;
+}
+
+html[lang="ar"] .admin-lang-toggle {
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+}
+
+html[lang="en"] .admin-lang-toggle {
+  font-family: "IBM Plex Sans Arabic", "Segoe UI", sans-serif;
+}
+
+.admin-lang-toggle:hover {
+  border-color: var(--admin-amber);
+  color: var(--admin-amber);
+}
+
+.admin-lang-toggle--corner {
+  position: absolute;
+  top: 1.25rem;
+  inset-inline-end: 1.25rem;
+}
+
+.admin-switch-link {
+  font: inherit;
+  font-size: 0.8rem;
+  color: var(--admin-amber);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.admin-logo {
+  width: 110px;
+  height: auto;
+}
+
+.admin-header h1 {
+  color: var(--admin-cream);
+  font-size: 1.15rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.admin-main {
+  max-width: 1040px;
+  margin-inline: auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-tab {
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--admin-teal);
+  background: transparent;
+  color: var(--admin-teal);
+  cursor: pointer;
+}
+
+.admin-tab[aria-selected="true"] {
+  background: var(--admin-teal);
+  color: var(--admin-cream);
+}
+
+.admin-cv-link {
+  color: var(--admin-teal);
+  font-weight: 600;
+}
+
+.admin-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--admin-ink);
+  margin: 0 0 1.25rem;
+}
+
+.admin-status {
+  color: rgba(28, 26, 23, 0.55);
+  font-size: 0.9rem;
+}
+
+.admin-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(14, 92, 104, 0.08);
+  overflow: hidden;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th {
+  text-align: start;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(28, 26, 23, 0.45);
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.admin-table td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--admin-border);
+  font-size: 0.95rem;
+}
+
+.admin-table tbody tr {
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.admin-table tbody tr:hover {
+  background: rgba(201, 191, 174, 0.18);
+}
+
+.admin-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.admin-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+}
+
+.admin-avatar {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--admin-teal);
+  color: var(--admin-cream);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.admin-date-cell {
+  color: rgba(28, 26, 23, 0.55);
+}
+
+.admin-detail-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 27, 31, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 10;
+}
+
+.admin-detail-overlay[hidden] {
+  display: none;
+}
+
+.admin-detail {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  max-width: 560px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 2rem;
+  box-shadow: 0 24px 56px rgba(9, 27, 31, 0.3);
+}
+
+.admin-detail h2 {
+  margin: 0 0 1.25rem;
+  font-size: 1.3rem;
+  color: var(--admin-teal);
+}
+
+.admin-detail-close {
+  position: absolute;
+  top: 1rem;
+  inset-inline-end: 1rem;
+  border: 0;
+  background: rgba(28, 26, 23, 0.06);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--admin-ink);
+}
+
+.admin-detail-fields {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0;
+}
+
+.admin-detail-fields dt {
+  font-size: 0.78rem;
+  color: rgba(28, 26, 23, 0.5);
+  margin-bottom: 0.15rem;
+}
+
+/* Small caps-style labels for English only (Arabic has no case). */
+html[lang="en"] .admin-table th {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+html[lang="en"] .admin-detail-fields dt {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.admin-detail-fields dd {
+  margin: 0;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+}

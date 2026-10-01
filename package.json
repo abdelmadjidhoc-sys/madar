@@ -2,13 +2,18 @@
   "name": "madar",
   "version": "1.0.0",
   "private": true,
-  "description": "Madar (مدار) — bilingual one-page site. The frontend (index.html/css/js) is plain HTML/CSS/JS with no build step. api/contact.js is a Vercel serverless function that saves Contact-section submissions to Postgres (Neon) via the `pg` package. bootstrap-icons is a dev-time icon source only — its SVGs are copied inline into index.html, so node_modules is never shipped to the browser.",
+  "description": "Madar (مدار) — bilingual (Arabic/English) Next.js site. Pages live in app/, components in components/, all copy in lib/content.js. API route handlers in app/api save form submissions to Postgres (Neon) via the pg package. bootstrap-icons is a dev-time icon source only — its SVGs are copied into components/icons.js.",
   "scripts": {
-    "setup-db": "node --env-file=.env scripts/setup-db.js",
-    "dev": "node --env-file=.env scripts/dev-server.js"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "setup-db": "node --env-file=.env scripts/setup-db.js"
   },
   "dependencies": {
     "bootstrap-icons": "^1.13.1",
-    "pg": "^8.23.0"
+    "next": "^16.3.8",
+    "pg": "^8.23.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
   }
 }

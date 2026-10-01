@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "adminmadar.html"
+        ],
+        "createdAt": "2026-10-01T14:41:34.558Z",
+        "reason": "Claude: cream (#faf7f2) is one of Madar's six pinned brand colors, documented in PROGRESS.md/PRODUCT.md"
+      }
+    ]
+  }
+}

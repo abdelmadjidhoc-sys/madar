@@ -1,5 +1,5 @@
 /**
- * One-time (idempotent) table setup for Contact submissions.
+ * One-time (idempotent) table setup for Contact submissions and join applications.
  * Usage: node --env-file=.env scripts/setup-db.js
  */
 const { Client } = require("pg");
@@ -32,6 +32,33 @@ async function main() {
   `);
 
   console.log("contact_submissions table is ready.");
+
+  await client.query(`
+    CREATE TABLE IF NOT EXISTS join_applications (
+      id SERIAL PRIMARY KEY,
+      full_name TEXT NOT NULL,
+      phone TEXT NOT NULL,
+      email TEXT NOT NULL,
+      age INTEGER NOT NULL,
+      organization TEXT,
+      instagram TEXT,
+      heard_from TEXT NOT NULL,
+      heard_from_other TEXT,
+      department TEXT NOT NULL,
+      has_experience BOOLEAN NOT NULL,
+      experience_details TEXT,
+      skills TEXT NOT NULL,
+      motivation TEXT NOT NULL,
+      weekly_hours TEXT NOT NULL,
+      field_work TEXT NOT NULL,
+      cv_filename TEXT NOT NULL,
+      cv_mime_type TEXT NOT NULL,
+      cv_data BYTEA NOT NULL,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    );
+  `);
+
+  console.log("join_applications table is ready.");
   await client.end();
 }
 
