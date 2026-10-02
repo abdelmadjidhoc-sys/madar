@@ -1479,6 +1479,7 @@ section h2 {
 .links-profile h1 {
   font-size: 1.3rem;
   margin-bottom: var(--space-3);
+  text-wrap: balance;
 }
 
 .links-bio {
