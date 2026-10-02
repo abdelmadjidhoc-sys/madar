@@ -1446,12 +1446,10 @@ section h2 {
   max-width: 480px;
 }
 
-.links-page .session-back-link {
-  color: var(--color-ink-on-teal-muted);
-}
-
-.links-page .session-back-link:hover {
-  color: var(--color-amber-on-teal);
+.link-card-featured .hero-video {
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .links-profile {
@@ -1504,6 +1502,10 @@ section h2 {
 
 .links-social {
   justify-content: center;
+}
+
+.links-social a {
+  color: #fff;
 }
 
 .links-list {
@@ -1581,7 +1583,7 @@ section h2 {
 .link-button-icon--brand svg {
   width: 18px;
   height: 18px;
-  color: var(--color-ink-on-teal);
+  fill: #fff;
 }
 
 .link-button-text {

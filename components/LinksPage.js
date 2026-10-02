@@ -3,7 +3,8 @@
 import { MADAR_LINKS, MADAR_PODCAST } from "@/lib/content";
 import { useLang } from "./LanguageProvider";
 import SocialList from "./SocialList";
-import { ArrowIcon, InstagramIcon, MailIcon, ThreadsIcon, TikTokIcon, YouTubeIcon } from "./icons";
+import HeroVideo from "./HeroVideo";
+import { InstagramIcon, MailIcon, ThreadsIcon, TikTokIcon, YouTubeIcon } from "./icons";
 
 const BRAND_LINKS = [
   ["instagram", "linksPage.instagramLabel", InstagramIcon],
@@ -14,8 +15,8 @@ const BRAND_LINKS = [
 
 /**
  * A link-in-bio page (same idea as the linktr.ee/madar.qa page this
- * mirrors) rather than a regular site page — no site header/nav, just a
- * small way back to the main site above the profile card.
+ * mirrors) rather than a regular site page — no site header, nav, or
+ * footer. The featured join card uses the same video banner as /join.
  */
 export default function LinksPage() {
   const { t } = useLang();
@@ -23,10 +24,6 @@ export default function LinksPage() {
   return (
     <main id="main" className="links-page">
       <div className="container container--links">
-        <a className="session-back-link" href="/">
-          <ArrowIcon className="icon icon-arrow icon-arrow--back" />
-          <span>{t("linksPage.backLink")}</span>
-        </a>
 
         <div className="links-profile">
           <span className="links-avatar">
@@ -39,11 +36,17 @@ export default function LinksPage() {
         </div>
 
         <div className="links-list">
-          {/* Featured link: real destination is our own session-request page,
-              not an external URL. */}
-          <a className="link-card-featured" href="/contact">
-            <img src="/assets/images/logo-on-dark.svg" alt={t("linksPage.featuredLabel")} />
+          {/* Featured link: our own join-the-team page, not an external URL. */}
+          <a className="link-card-featured" href="/join">
+            <HeroVideo src="/assets/videos/hero-madar.mp4" />
             <span>{t("linksPage.featuredLabel")}</span>
+          </a>
+
+          <a className="link-button" href="/contact">
+            <span className="link-button-icon">
+              <img src="/assets/images/logo-on-dark.svg" alt="" />
+            </span>
+            <span>{t("linksPage.sessionLabel")}</span>
           </a>
 
           <a className="link-button" href={MADAR_PODCAST.channelUrl} target="_blank" rel="noopener">
