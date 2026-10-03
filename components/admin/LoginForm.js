@@ -23,7 +23,10 @@ export default function LoginForm() {
         if (res.status === 401) throw new Error("wrongCredentials");
         if (!res.ok) throw new Error("loginError");
         // Full navigation so the dashboard is rendered with the new cookie.
-        window.location.href = "/adminmadar";
+        // ?next= (set by proxy.js for CV links) is honoured for same-site paths only.
+        const next = new URLSearchParams(window.location.search).get("next");
+        const sameSite = next && /^\/[^/\\]/.test(next);
+        window.location.href = sameSite ? next : "/adminmadar";
       })
       .catch((err) => {
         setError(err.message === "wrongCredentials" ? "wrongCredentials" : "loginError");

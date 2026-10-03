@@ -399,3 +399,120 @@ html[lang="en"] .admin-detail-fields dt {
   font-size: 0.95rem;
   white-space: pre-wrap;
 }
+
+/* ---------- Toolbar: title + Excel export ---------- */
+.admin-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.admin-toolbar .admin-title {
+  margin: 0;
+}
+
+.admin-export-btn {
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  border: 0;
+  background: var(--admin-teal);
+  color: var(--admin-cream);
+  cursor: pointer;
+}
+
+.admin-export-btn:hover:not(:disabled) {
+  background: var(--admin-teal-dark);
+}
+
+.admin-export-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* ---------- Row delete ---------- */
+.admin-action-cell {
+  width: 1%;
+  white-space: nowrap;
+  text-align: end;
+}
+
+.admin-delete-btn {
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--admin-maroon);
+  background: transparent;
+  color: var(--admin-maroon);
+  cursor: pointer;
+}
+
+.admin-delete-btn:hover {
+  background: var(--admin-maroon);
+  color: var(--admin-cream);
+}
+
+.admin-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Delete confirmation ---------- */
+.admin-confirm {
+  max-width: 420px;
+}
+
+.admin-confirm h2 {
+  color: var(--admin-maroon);
+  margin-bottom: 0.5rem;
+}
+
+.admin-confirm p {
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
+}
+
+.admin-confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.admin-cancel-btn,
+.admin-confirm-delete-btn {
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.admin-cancel-btn {
+  border: 1.5px solid var(--admin-border);
+  background: transparent;
+  color: var(--admin-ink);
+}
+
+.admin-confirm-delete-btn {
+  border: 0;
+  background: var(--admin-maroon);
+  color: var(--admin-cream);
+}
+
+.admin-cancel-btn:disabled,
+.admin-confirm-delete-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}

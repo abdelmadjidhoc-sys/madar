@@ -13,6 +13,14 @@ export function proxy(request) {
   const { pathname } = request.nextUrl;
   if (OPEN_PATHS.includes(pathname) || getAdmin(request)) return NextResponse.next();
 
+  // CV links are opened straight from the Excel export: log in, then come back to the file.
+  const { searchParams } = request.nextUrl;
+  if (pathname === "/api/admin/applications" && searchParams.has("cv")) {
+    const login = new URL("/adminmadar/login", request.url);
+    login.searchParams.set("next", pathname + "?" + searchParams.toString());
+    return NextResponse.redirect(login);
+  }
+
   if (pathname.startsWith("/api/")) {
     return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
   }

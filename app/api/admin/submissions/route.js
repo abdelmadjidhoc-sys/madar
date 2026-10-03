@@ -2,6 +2,7 @@
  * GET /api/admin/submissions
  * Returns the list for the admin table: id, name, and date only (full detail
  * is a separate request — see ../submission/route.js — so the list stays light).
+ * GET /api/admin/submissions?full=1 returns every field of every row (Excel export).
  * Admin only: requires the session cookie from /api/admin/login (lib/auth.js).
  */
 import { getPool } from "@/lib/db";
@@ -15,10 +16,13 @@ export async function GET(request) {
   if (denied) return denied;
 
   try {
+    const full = new URL(request.url).searchParams.has("full");
     const { rows } = await getPool().query(
-      `SELECT id, full_name, phone, created_at
-       FROM contact_submissions
-       ORDER BY created_at DESC`
+      full
+        ? `SELECT * FROM contact_submissions ORDER BY created_at DESC`
+        : `SELECT id, full_name, phone, created_at
+           FROM contact_submissions
+           ORDER BY created_at DESC`
     );
     return Response.json({ ok: true, submissions: rows });
   } catch (err) {

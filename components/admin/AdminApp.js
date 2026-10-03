@@ -3,13 +3,16 @@
 /**
  * Madar admin — submissions table + detail view, in Arabic (default) or
  * English. Talks to /api/admin/submissions + /api/admin/submission?id=
- * (session requests) and /api/admin/applications (join applications). Only
- * reachable when logged in — see proxy.js and lib/auth.js.
+ * (session requests) and /api/admin/applications (join applications). Each
+ * row can be deleted (after a confirm dialog), and the open tab can be
+ * exported as an .xlsx file. Only reachable when logged in — see proxy.js
+ * and lib/auth.js.
  *
  * All labels come from lib/content.js: admin.* for the dashboard itself,
  * and form.* / joinForm.* so each answer reads exactly as it did in the form.
  */
 import { Fragment, useCallback, useEffect, useState } from "react";
+import writeExcelFile from "write-excel-file/browser";
 import { DocumentTitle, useLang } from "../LanguageProvider";
 
 // Stored value → content key of the label the applicant saw.
@@ -64,6 +67,15 @@ const FIELD_WORK_KEYS = {
   depends: "joinForm.fieldWorkDepends",
 };
 
+function cvUrl(id) {
+  return "/api/admin/applications?id=" + encodeURIComponent(id) + "&cv=1";
+}
+
+/** Escapes a string for use inside a quoted Excel formula argument. */
+function excelText(value) {
+  return String(value).replace(/"/g, '""');
+}
+
 function formatDate(iso, lang) {
   // Latin digits in both languages, to match phone numbers and ages.
   return new Date(iso).toLocaleString(lang === "ar" ? "ar-QA-u-nu-latn" : "en-GB", {
@@ -78,10 +90,13 @@ function formatDate(iso, lang) {
 export default function AdminApp({ username }) {
   const { lang, setLang, t } = useLang();
   // "sessions" = /contact requests, "applications" = /join applications
-  const [view, setView] = useState("sessions");
+  const [view, setView] = useState("applications");
   const [rows, setRows] = useState(null);
   const [loadError, setLoadError] = useState(false);
   const [detail, setDetail] = useState(null); // { type, record }
+  const [pendingDelete, setPendingDelete] = useState(null); // { id, name }
+  const [deleting, setDeleting] = useState(false);
+  const [exporting, setExporting] = useState(false);
 
   useEffect(() => {
     setRows(null);
@@ -105,11 +120,16 @@ export default function AdminApp({ username }) {
 
   useEffect(() => {
     const onKey = (event) => {
-      if (event.key === "Escape") closeDetail();
+      if (event.key !== "Escape") return;
+      if (pendingDelete) {
+        if (!deleting) setPendingDelete(null);
+      } else {
+        closeDetail();
+      }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [closeDetail]);
+  }, [closeDetail, pendingDelete, deleting]);
 
   function logOut() {
     fetch("/api/admin/logout", { method: "POST" }).finally(() => {
@@ -136,6 +156,64 @@ export default function AdminApp({ username }) {
       .catch(() => {
         alert(t("admin.detailError"));
       });
+  }
+
+  function confirmDelete() {
+    const { id } = pendingDelete;
+    const url =
+      view === "applications"
+        ? "/api/admin/applications?id=" + encodeURIComponent(id)
+        : "/api/admin/submission?id=" + encodeURIComponent(id);
+    setDeleting(true);
+    fetch(url, { method: "DELETE" })
+      .then((res) => {
+        if (!res.ok) throw new Error("failed");
+        setRows((current) => current.filter((row) => row.id !== id));
+        setPendingDelete(null);
+      })
+      .catch(() => alert(t("admin.deleteError")))
+      .finally(() => setDeleting(false));
+  }
+
+  /** Downloads every entry of the open tab, with the same labels as the detail view. */
+  async function exportExcel() {
+    setExporting(true);
+    try {
+      const res = await fetch(isApplications ? "/api/admin/applications?full=1" : "/api/admin/submissions?full=1");
+      if (!res.ok) throw new Error("failed");
+      const data = await res.json();
+      const records = isApplications ? data.applications : data.submissions;
+      const toFields = (record) => [
+        [t("admin.colName"), record.full_name],
+        ...(isApplications ? applicationFields(record, true) : sessionFields(record)),
+      ];
+      const header = toFields(records[0]).map(([label]) => ({ value: label, fontWeight: "bold" }));
+      const body = records.map((record) =>
+        toFields(record).map(([, value]) =>
+          // typeof check, not value.link alone: every string has a legacy .link() method.
+          value && typeof value === "object"
+            ? {
+                // Clickable in Excel; opens the CV download (needs an admin login in the browser).
+                type: "Formula",
+                // Written as-is into the sheet XML, where formulas have no leading "=".
+                value: 'HYPERLINK("' + excelText(value.link) + '","' + excelText(value.text) + '")',
+                textColor: "#0563C1",
+              }
+            : { value: value === null || value === undefined ? "" : String(value), wrap: true }
+        )
+      );
+      const label = isApplications ? t("admin.tabApplications") : t("admin.tabSessions");
+      const stamp = new Date().toISOString().slice(0, 10);
+      await writeExcelFile([header, ...body], {
+        columns: header.map(() => ({ width: 28 })),
+        stickyRowsCount: 1,
+        rightToLeft: lang === "ar",
+      }).toFile(label + " " + stamp + ".xlsx");
+    } catch (err) {
+      alert(t("admin.exportError"));
+    } finally {
+      setExporting(false);
+    }
   }
 
   /** Label for a stored choice value: the form's own wording, or the raw value if unknown. */
@@ -166,7 +244,8 @@ export default function AdminApp({ username }) {
     ];
   }
 
-  function applicationFields(a) {
+  /** plain = for the Excel export: the CV is { link, text } instead of an <a>. */
+  function applicationFields(a, plain) {
     return [
       [field("submittedAt"), formatDate(a.created_at, lang)],
       [field("phone"), a.phone],
@@ -187,9 +266,13 @@ export default function AdminApp({ username }) {
       [field("fieldWork"), choice(FIELD_WORK_KEYS, a.field_work)],
       [
         field("cv"),
-        <a className="admin-cv-link" href={"/api/admin/applications?id=" + encodeURIComponent(a.id) + "&cv=1"}>
-          {a.cv_filename}
-        </a>,
+        plain ? (
+          { link: window.location.origin + cvUrl(a.id), text: a.cv_filename }
+        ) : (
+          <a className="admin-cv-link" href={cvUrl(a.id)}>
+            {a.cv_filename}
+          </a>
+        ),
       ],
     ];
   }
@@ -230,8 +313,8 @@ export default function AdminApp({ username }) {
       <main className="admin-main">
         <div className="admin-tabs" role="tablist">
           {[
-            ["sessions", t("admin.tabSessions")],
             ["applications", t("admin.tabApplications")],
+            ["sessions", t("admin.tabSessions")],
           ].map(([key, label]) => (
             <button
               className="admin-tab"
@@ -246,10 +329,20 @@ export default function AdminApp({ username }) {
           ))}
         </div>
 
-        <h2 className="admin-title">
-          {(isApplications ? t("admin.tabApplications") : t("admin.tabSessions")) +
-            (rows ? " (" + rows.length + ")" : "")}
-        </h2>
+        <div className="admin-toolbar">
+          <h2 className="admin-title">
+            {(isApplications ? t("admin.tabApplications") : t("admin.tabSessions")) +
+              (rows ? " (" + rows.length + ")" : "")}
+          </h2>
+          <button
+            className="admin-export-btn"
+            type="button"
+            onClick={exportExcel}
+            disabled={exporting || !rows || !rows.length}
+          >
+            {exporting ? t("admin.exporting") : t("admin.exportExcel")}
+          </button>
+        </div>
         <p className="admin-status">{statusText}</p>
 
         <div className="admin-card">
@@ -259,6 +352,9 @@ export default function AdminApp({ username }) {
                 <tr>
                   <th>{t("admin.colName")}</th>
                   <th>{t("admin.colDate")}</th>
+                  <th>
+                    <span className="admin-visually-hidden">{t("admin.delete")}</span>
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -274,6 +370,18 @@ export default function AdminApp({ username }) {
                       </div>
                     </td>
                     <td className="admin-date-cell">{formatDate(row.created_at, lang)}</td>
+                    <td className="admin-action-cell">
+                      <button
+                        className="admin-delete-btn"
+                        type="button"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          setPendingDelete({ id: row.id, name: row.full_name });
+                        }}
+                      >
+                        {t("admin.delete")}
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -304,6 +412,40 @@ export default function AdminApp({ username }) {
                   </Fragment>
                 ))}
             </dl>
+          </div>
+        </div>
+      )}
+
+      {pendingDelete && (
+        <div
+          className="admin-detail-overlay"
+          onClick={(event) => {
+            if (event.target === event.currentTarget && !deleting) setPendingDelete(null);
+          }}
+        >
+          <div
+            className="admin-detail admin-confirm"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="confirmTitle"
+            aria-describedby="confirmText"
+          >
+            <h2 id="confirmTitle">{t("admin.confirmDeleteTitle")}</h2>
+            <p id="confirmText">{t("admin.confirmDeleteText").replace("{name}", pendingDelete.name)}</p>
+            <div className="admin-confirm-actions">
+              <button
+                className="admin-cancel-btn"
+                type="button"
+                autoFocus
+                disabled={deleting}
+                onClick={() => setPendingDelete(null)}
+              >
+                {t("admin.cancel")}
+              </button>
+              <button className="admin-confirm-delete-btn" type="button" disabled={deleting} onClick={confirmDelete}>
+                {deleting ? t("admin.deleting") : t("admin.delete")}
+              </button>
+            </div>
           </div>
         </div>
       )}
