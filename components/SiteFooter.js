@@ -3,7 +3,7 @@
 import { useLang } from "./LanguageProvider";
 import SocialList from "./SocialList";
 
-/** `onHome` keeps the logo as an in-page #top link and shows the IP notice (home page only, as before). */
+/** `onHome` keeps the logo as an in-page #top link. */
 export default function SiteFooter({ onHome = false }) {
   const { t } = useLang();
 
@@ -18,12 +18,8 @@ export default function SiteFooter({ onHome = false }) {
 
         <div className="footer-fine-print">
           <p className="footer-disclaimer">{t("footer.disclaimer")}</p>
-          {onHome && (
-            <>
-              <h3 className="footer-ip-heading">{t("footer.ipHeading")}</h3>
-              <p className="footer-ip-text">{t("footer.ipText")}</p>
-            </>
-          )}
+          <h3 className="footer-ip-heading">{t("footer.ipHeading")}</h3>
+          <p className="footer-ip-text">{t("footer.ipText")}</p>
           <p className="footer-copyright">{t("footer.copyright")}</p>
           <p className="footer-version">v0.1</p>
         </div>

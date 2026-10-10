@@ -5,32 +5,24 @@ import RevealSection from "../RevealSection";
 import SiteHeader from "../SiteHeader";
 import SiteFooter from "../SiteFooter";
 import SocialList from "../SocialList";
+import NewsGrid from "../NewsGrid";
 import Founders from "./Founders";
 import Podcast from "./Podcast";
 import StatNumber from "./StatNumber";
-import {
-  ArrowIcon,
-  BookIcon,
-  BroadcastIcon,
-  BuildingIcon,
-  CalendarIcon,
-  CameraIcon,
-  CompassIcon,
-  MicIcon,
-} from "../icons";
+import { ArrowIcon, BookIcon, BroadcastIcon, CalendarIcon, CameraIcon, CompassIcon, MicIcon } from "../icons";
 
 // Same order as activities.items in lib/content.js
 const ACTIVITY_ICONS = [BroadcastIcon, BookIcon, CalendarIcon, MicIcon, CameraIcon, CompassIcon];
 
-const NEWS_IMAGES = [
-  "/assets/images/news/news-1-beach-cleanup.jpg",
-  "/assets/images/news/news-2-dialogue-session.jpg",
-  "/assets/images/news/news-3-bilarabi-forum.jpg",
-];
-
-// TODO: real partner logos not supplied yet — these are placeholder slots,
-// not real organizations. Replace with <img> logos once provided.
-const PARTNER_SLOTS = 6;
+/** "Read more" link to another page, used at the end of the summary sections. */
+function MoreLink({ href, children }) {
+  return (
+    <a className="section-link" href={href}>
+      <span>{children}</span>
+      <ArrowIcon className="icon icon-arrow" />
+    </a>
+  );
+}
 
 export default function HomePage() {
   const { t } = useLang();
@@ -93,6 +85,7 @@ export default function HomePage() {
               <h2>{t("about.heading")}</h2>
               <p className="about-body">{t("about.body")}</p>
               <p className="about-disclaimer">{t("about.disclaimer")}</p>
+              <MoreLink href="/about">{t("about.more")}</MoreLink>
             </div>
             {/* Qatar National Vision 2030 mark, supplied by client, paired with the
                 non-affiliation disclaimer: Madar draws on QNV2030's direction but
@@ -107,19 +100,11 @@ export default function HomePage() {
           </div>
         </RevealSection>
 
-        {/* ============ STORY ============ */}
-        {/* TODO: placeholder body text — real founding story not supplied yet. */}
-        <RevealSection className="story" id="story">
-          <div className="container container--narrow">
-            <h2>{t("story.heading")}</h2>
-            <p>{t("story.body")}</p>
-          </div>
-        </RevealSection>
-
         {/* ============ ACTIVITIES ============ */}
         <RevealSection className="activities" id="activities">
           <div className="container">
             <h2>{t("activities.heading")}</h2>
+            <p className="section-intro">{t("activities.intro")}</p>
 
             <div className="activity-grid">
               {t("activities.items").map((item, i) => {
@@ -137,24 +122,12 @@ export default function HomePage() {
                 );
               })}
             </div>
+
+            <MoreLink href="/about#platform-activities">{t("activities.more")}</MoreLink>
           </div>
         </RevealSection>
 
         <Founders />
-
-        {/* ============ PARTNERSHIPS ============ */}
-        <RevealSection className="partnerships" id="partnerships">
-          <div className="container">
-            <h2>{t("partnerships.heading")}</h2>
-            <div className="partner-grid">
-              {Array.from({ length: PARTNER_SLOTS }, (_, i) => (
-                <span className="partner-logo" aria-hidden="true" key={i}>
-                  <BuildingIcon />
-                </span>
-              ))}
-            </div>
-          </div>
-        </RevealSection>
 
         {/* ============ STATS ============ */}
         <RevealSection className="stats" id="stats">
@@ -178,16 +151,8 @@ export default function HomePage() {
         <RevealSection className="news" id="news">
           <div className="container">
             <h2>{t("news.heading")}</h2>
-
-            <div className="news-grid">
-              {t("news.items").map((item, i) => (
-                <article className="news-card" key={NEWS_IMAGES[i]}>
-                  <img className="news-thumb" src={NEWS_IMAGES[i]} alt={item.title} />
-                  <h3>{item.title}</h3>
-                  <p>{item.excerpt}</p>
-                </article>
-              ))}
-            </div>
+            <NewsGrid limit={4} featured />
+            <MoreLink href="/news">{t("news.allLink")}</MoreLink>
           </div>
         </RevealSection>
 

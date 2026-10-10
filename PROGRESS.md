@@ -250,3 +250,48 @@ over as-is.
   session themselves.
 - **For production:** add the same three variables in Vercel → Settings → Environment
   Variables before deploying, or the admin panel will be locked for everyone.
+
+## 2026-10-10 — Four-page structure (from the "Madar-Website-Content" Google Doc)
+
+- The site is now 4 pages, linked from the header nav: **Home** (`/`), **About** (`/about`),
+  **News** (`/news`), **Contact** (`/contact`). The current page is highlighted in the nav.
+- **Home** keeps the hero, a short About summary, Activities (short descriptions), Founders,
+  Stats, Podcast, the latest news item, and Contact. Each summary links on to the full page.
+  The Story and Partnerships sections moved to About.
+- **About** (`components/about/AboutPage.js`): definition + target audience, vision, mission,
+  the meaning of the name, principles, goals, value added, the 9 platform activities,
+  expected impact, founders, partnerships (still placeholder logo slots), and the full
+  founding story (replaces the old TODO placeholder).
+- **News** (`components/news/NewsPage.js`): all news cards + the podcast.
+- **Contact** is the session booking form, now indexable (it is a main page) and without the
+  "back to site" link. The footer IP notice now shows on every page.
+- All new copy is in `lib/content.js` (`aboutPage`, `newsPage`, `story.paragraphs`). Arabic
+  is taken word for word from the doc; English is a DRAFT translation pending sign-off.
+- Kept the real stat values (12 / 37K+ / 20+). The doc lists them as 0, but that is just what
+  the counters show before they animate.
+
+## 2026-10-10 — Content edits round
+
+- **Podcast:** new episode "خارج حدود التخصص - المياسة الأنصاري" (`TByD_reVME8`) is now the
+  featured one. Episodes are a list (`MADAR_PODCAST.episodes` + `podcast.episodes` titles,
+  newest first). Older episodes show under "حلقات أخرى" and play in the same player.
+- **News covers are 4:5** (Instagram post format). Drop new covers into
+  `public/assets/images/news/` and list them in `components/NewsGrid.js`.
+- **Founders:** Saud and Zaher's bullet lists replaced with the client's updated lists.
+  Titles were already correct and are unchanged.
+- **Stats:** views are now 200K+, labelled "عدد المشاهدات". The partners label no longer says
+  "الإعلامية", because not every partner is a media outlet.
+- **About:** new "الهوية الخاصة بالمنصة" section (tagline, IP elements, copyright items).
+- Definition, goals, value added, and activities text sent again by the client was already
+  on the site and was left unchanged.
+- **News from Instagram:** added 3 posts as news items (newest first). Covers are saved in
+  `public/assets/images/news/` and each card links to its post: Al Sadd Youth Center
+  partnership (`DeSHRq1u-UV`, a reel, so its cover is 9:16 and gets cropped to 4:5), Al-Khor
+  Youth Committee agreement (`DeSEfggO1YL`), and the National Career Guidance Program
+  (`DdzLHliO-Yo`). Titles come from the cover text; excerpts are shortened from the captions.
+- **Older news fixed:** the beach cleanup, dialogue session, and Bil-Arabi covers were
+  replaced with the real covers from the Instagram reels (`DdiyRoOSCi_`, `DdpKCM8OY-6`,
+  `Ddk5vyNsMya`). Their summaries now come from the post captions, and each card links to its post.
+- **Home "أحدث الأخبار"** now shows 4 items: the newest is large on the start side (right in
+  Arabic) and the next 3 are compact cards stacked beside it (`<NewsGrid limit={4} featured />`).
+  They stack in one column on phones.

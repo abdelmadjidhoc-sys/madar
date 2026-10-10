@@ -926,10 +926,15 @@ section h2 {
   color: var(--color-ink-on-teal);
 }
 
+.podcast-head {
+  margin-bottom: var(--space-7);
+}
+
+/* Featured episode: large player, episode details + other episodes beside it */
 .podcast-inner {
   display: grid;
-  gap: var(--space-7);
-  align-items: center;
+  gap: var(--space-6);
+  align-items: start;
 }
 
 .podcast-thumb-placeholder {
@@ -992,14 +997,24 @@ section h2 {
 }
 
 .podcast-episode-title {
-  margin-block-start: var(--space-6);
-  margin-block-end: var(--space-6);
+  margin-block-end: var(--space-5);
   font-size: 1.4rem;
+}
+
+.play-button {
+  width: 84px;
+  height: 84px;
+}
+
+.play-button svg {
+  width: 30px;
+  height: 30px;
 }
 
 @media (min-width: 900px) {
   .podcast-inner {
-    grid-template-columns: 0.85fr 1.15fr;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-7);
   }
 }
 
@@ -1028,12 +1043,11 @@ section h2 {
   box-shadow: var(--shadow-md);
 }
 
-/* Placeholder thumbnail — plain tile until real article photos are
-   supplied (see the TODO comment above this section in components/home/HomePage.js). */
+/* 4:5 portrait covers, matching the Instagram post format the news is published in */
 .news-thumb {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
   background: var(--color-teal);
 }
@@ -1598,4 +1612,481 @@ section h2 {
   color: var(--color-ink-on-teal-muted);
   font-weight: 400;
   font-size: 0.78rem;
+}
+
+/* ---------- Footer IP notice (now on every page) ---------- */
+.footer-ip-heading {
+  margin-block: var(--space-4) var(--space-1);
+  font-size: 0.85rem;
+  color: var(--color-ink-on-teal);
+}
+
+.footer-ip-text {
+  font-size: 0.78rem;
+  color: rgba(243, 239, 231, 0.6);
+  max-width: 56ch;
+  margin-bottom: var(--space-3);
+}
+
+@media (min-width: 700px) {
+  .footer-ip-text,
+  .footer-disclaimer {
+    margin-inline-start: auto;
+  }
+}
+
+/* ---------- Current page in the nav ---------- */
+.site-nav a[aria-current="page"],
+.mobile-nav a[aria-current="page"] {
+  color: var(--color-amber-on-teal);
+}
+
+/* ---------- Shared section pieces ---------- */
+.section-intro {
+  margin-block-start: var(--space-4);
+  font-size: 1.05rem;
+  opacity: 0.8;
+}
+
+.section-outro {
+  margin-block-start: var(--space-7);
+  font-size: 1.05rem;
+  color: rgba(28, 26, 23, 0.78);
+}
+
+/* "Read more" link closing a summary section on the home page */
+.section-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-block-start: var(--space-6);
+  font-weight: 600;
+  color: var(--color-teal);
+  border-block-end: 1px solid currentColor;
+  padding-block-end: 2px;
+  transition: color 0.2s var(--ease-out);
+}
+
+.section-link:hover {
+  color: var(--color-amber-dark);
+}
+
+.activities .section-link {
+  color: var(--color-amber-on-teal);
+}
+
+.activities .section-link:hover {
+  color: var(--color-cream);
+}
+
+.about-copy .section-link {
+  display: flex;
+  width: fit-content;
+}
+
+.band--cream {
+  background: var(--color-cream);
+}
+
+.band--teal {
+  background: linear-gradient(165deg, var(--color-teal) 0%, var(--color-teal-dark) 100%);
+  color: var(--color-ink-on-teal);
+}
+
+/* ---------- Inner page title band (/about, /news) ---------- */
+.page-hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(165deg, var(--color-teal) 0%, var(--color-teal-dark) 100%);
+  color: var(--color-ink-on-teal);
+  padding-block: var(--space-9) var(--space-8);
+}
+
+/* Faint brand pattern, same treatment as the Contact section */
+.page-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/assets/images/pattern-light.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.page-hero .container {
+  position: relative;
+}
+
+.page-hero-eyebrow {
+  color: var(--color-amber-on-teal);
+  font-weight: 600;
+  margin-bottom: var(--space-3);
+}
+
+.page-hero h1 {
+  font-size: clamp(2.25rem, 4vw + 1rem, 3.5rem);
+}
+
+.page-hero-intro {
+  margin-block-start: var(--space-5);
+  font-size: 1.1rem;
+  color: var(--color-ink-on-teal-muted);
+  max-width: 60ch;
+}
+
+/* ---------- About page ---------- */
+.audience-callout {
+  margin-block-start: var(--space-7);
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  padding: var(--space-5) var(--space-6);
+  border-radius: var(--radius-lg);
+  background: var(--color-sand);
+  max-width: 34rem;
+}
+
+.audience-range {
+  flex-shrink: 0;
+  color: var(--color-teal);
+  font-family: var(--font-body-en);
+  font-weight: 700;
+  font-size: clamp(2rem, 3vw + 1rem, 2.75rem);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.audience-callout h3 {
+  font-size: 1.05rem;
+  margin-bottom: var(--space-1);
+}
+
+.audience-callout p {
+  font-size: 0.95rem;
+  color: rgba(28, 26, 23, 0.75);
+}
+
+.statement-grid {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.statement-icon {
+  display: inline-flex;
+  color: var(--color-amber-on-teal);
+  margin-bottom: var(--space-4);
+}
+
+.statement-icon svg {
+  width: 32px;
+  height: 32px;
+  fill: currentColor;
+}
+
+.statement p {
+  margin-block-start: var(--space-4);
+  font-size: 1.1rem;
+  color: var(--color-ink-on-teal-muted);
+}
+
+.text-columns {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.text-columns h2 {
+  font-size: clamp(1.5rem, 1.5vw + 1rem, 2rem);
+}
+
+.text-columns p {
+  margin-block-start: var(--space-4);
+  color: rgba(28, 26, 23, 0.8);
+}
+
+@media (min-width: 900px) {
+  .statement-grid,
+  .text-columns {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-9);
+  }
+}
+
+.principle-list {
+  margin-block-start: var(--space-7);
+  display: grid;
+  column-gap: var(--space-8);
+}
+
+.principle-list li {
+  padding-block: var(--space-5);
+  border-block-start: 1px solid rgba(250, 247, 242, 0.18);
+}
+
+.principle-list h3 {
+  font-size: 1.1rem;
+  color: var(--color-amber-on-teal);
+}
+
+.principle-list p {
+  margin-block-start: var(--space-2);
+  color: var(--color-ink-on-teal-muted);
+}
+
+.goal-list {
+  margin: var(--space-7) 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: goal;
+  display: grid;
+  gap: var(--space-6) var(--space-8);
+}
+
+.goal-list li {
+  counter-increment: goal;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--space-5);
+}
+
+.goal-list li::before {
+  content: counter(goal, decimal-leading-zero);
+  grid-row: span 2;
+  color: var(--color-amber-dark);
+  font-family: var(--font-body-en);
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.goal-list h3 {
+  font-size: 1.1rem;
+}
+
+.goal-list p {
+  margin-block-start: var(--space-2);
+  color: rgba(28, 26, 23, 0.75);
+  font-size: 0.95rem;
+}
+
+@media (min-width: 900px) {
+  .principle-list,
+  .goal-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.group-grid {
+  margin-block-start: var(--space-7);
+  display: grid;
+  gap: var(--space-5);
+}
+
+.info-card {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6) var(--space-5);
+  box-shadow: var(--shadow-sm);
+}
+
+.info-card h3 {
+  font-size: 1.15rem;
+  margin-bottom: var(--space-4);
+}
+
+.info-card p {
+  color: rgba(28, 26, 23, 0.75);
+  font-size: 0.95rem;
+}
+
+.bullet-list li {
+  position: relative;
+  padding-inline-start: var(--space-5);
+  color: rgba(28, 26, 23, 0.75);
+  font-size: 0.95rem;
+}
+
+.bullet-list li + li {
+  margin-block-start: var(--space-2);
+}
+
+.bullet-list li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.65em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-amber);
+}
+
+@media (min-width: 900px) {
+  .group-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Activity cards on a cream section need their own surface */
+.activity-card--raised {
+  background: #fff;
+  border: 1px solid var(--color-border-on-cream);
+}
+
+.band--cream .activity-grid {
+  margin-block-start: var(--space-7);
+}
+
+.story p + p {
+  margin-block-start: var(--space-4);
+}
+
+.story .story-signoff {
+  margin-block-start: var(--space-6);
+  color: var(--color-teal);
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+/* ---------- News: home page "latest news" (1 lead + 3 compact) ---------- */
+.news-featured {
+  margin-block-start: var(--space-7);
+  display: grid;
+  gap: var(--space-5);
+}
+
+.news-featured-list {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.news-card--lead h3 {
+  font-size: 1.35rem;
+}
+
+/* Compact cards: small 4:5 cover beside the text */
+.news-card--compact .news-card-link,
+.news-card--compact:not(:has(.news-card-link)) {
+  display: grid;
+  grid-template-columns: 112px 1fr;
+  align-items: center;
+}
+
+.news-card--compact h3 {
+  margin: 0 var(--space-4);
+  font-size: 1rem;
+}
+
+.news-card--compact p {
+  margin: var(--space-2) var(--space-4) 0;
+  font-size: 0.85rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (min-width: 900px) {
+  .news-featured {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+
+  /* Three compact cards together match the lead card's height */
+  .news-featured-list {
+    height: 100%;
+    grid-template-rows: repeat(3, 1fr);
+  }
+
+  .news-card--compact .news-card-link,
+  .news-card--compact:not(:has(.news-card-link)) {
+    height: 100%;
+    grid-template-columns: minmax(120px, 34%) 1fr;
+  }
+
+  .news-card--compact .news-thumb {
+    height: 100%;
+  }
+}
+
+.news-card-link {
+  display: block;
+}
+
+/* ---------- About: identity + IP ---------- */
+.band--sand {
+  background: var(--color-sand);
+}
+
+.identity-inner {
+  display: grid;
+  gap: var(--space-7);
+  align-items: center;
+}
+
+.identity-tagline {
+  margin-block-start: var(--space-4);
+  color: var(--color-teal);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 2vw + 1rem, 2.25rem);
+  line-height: 1.3;
+}
+
+.identity-groups {
+  display: grid;
+  gap: var(--space-5);
+}
+
+@media (min-width: 700px) {
+  .identity-groups {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1000px) {
+  .identity-inner {
+    grid-template-columns: 0.8fr 1.2fr;
+  }
+}
+
+/* ---------- Podcast: other episodes ---------- */
+.podcast-more-heading {
+  margin-block: var(--space-7) var(--space-3);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-ink-on-teal-muted);
+}
+
+.podcast-episode-list {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.podcast-episode {
+  display: grid;
+  grid-template-columns: 128px 1fr;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  background: rgba(250, 247, 242, 0.08);
+  text-align: start;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.4;
+  transition: background 0.2s var(--ease-out);
+}
+
+.podcast-episode:hover {
+  background: rgba(250, 247, 242, 0.16);
+}
+
+.podcast-episode img {
+  width: 128px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 8px;
 }

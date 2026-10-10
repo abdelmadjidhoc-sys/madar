@@ -1,12 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { useLang } from "./LanguageProvider";
+
+const LINKS = [
+  ["/", "nav.home"],
+  ["/about", "nav.about"],
+  ["/news", "nav.news"],
+  ["/contact", "nav.contact"],
+];
 
 /**
  * Sticky header with nav, language toggle, and mobile menu.
- * `onHome` makes nav links plain in-page anchors (#about); on other pages
- * they point back to the home page sections (/#about).
+ * Nav links go to the four site pages; the current one gets aria-current.
+ * `onHome` makes the logo an in-page #top link instead of a link to /.
  */
 export default function SiteHeader({ onHome = false }) {
   const { lang, setLang, t } = useLang();
@@ -28,19 +36,13 @@ export default function SiteHeader({ onHome = false }) {
     return () => document.removeEventListener("keydown", onKey);
   }, []);
 
-  const base = onHome ? "" : "/";
-  const links = [
-    ["about", "nav.about"],
-    ["activities", "nav.activities"],
-    ["podcast", "nav.podcast"],
-    ["contact", "nav.contact"],
-  ];
+  const pathname = usePathname();
 
   const navList = (onClick) => (
     <ul>
-      {links.map(([id, key]) => (
-        <li key={id}>
-          <a href={base + "#" + id} onClick={onClick}>
+      {LINKS.map(([href, key]) => (
+        <li key={href}>
+          <a href={href} aria-current={pathname === href ? "page" : undefined} onClick={onClick}>
             {t(key)}
           </a>
         </li>
