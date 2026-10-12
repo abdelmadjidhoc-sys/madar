@@ -1536,11 +1536,6 @@ section h2 {
   overflow: hidden;
   background: var(--color-teal-dark);
   border: 1px solid rgba(250, 247, 242, 0.16);
-  transition: transform 0.2s var(--ease-out);
-}
-
-.link-card-featured:hover {
-  transform: translateY(-3px);
 }
 
 .link-card-featured img {
@@ -1549,14 +1544,6 @@ section h2 {
   object-fit: contain;
   padding: var(--space-6);
   background: var(--color-teal-dark);
-}
-
-.link-card-featured span {
-  padding: var(--space-4);
-  text-align: center;
-  color: var(--color-amber-on-teal);
-  font-weight: 600;
-  border-block-start: 1px solid rgba(250, 247, 242, 0.16);
 }
 
 .link-button {

@@ -4,9 +4,10 @@ import { MADAR_LINKS } from "@/lib/content";
 import { useLang } from "./LanguageProvider";
 import SocialList from "./SocialList";
 import HeroVideo from "./HeroVideo";
-import { MailIcon, ThreadsIcon, TikTokIcon, YouTubeIcon } from "./icons";
+import { InstagramIcon, MailIcon, ThreadsIcon, TikTokIcon, YouTubeIcon } from "./icons";
 
 const BRAND_LINKS = [
+  ["instagram", "linksPage.instagramLabel", InstagramIcon],
   ["tiktok", "linksPage.tiktokLabel", TikTokIcon],
   ["youtube", "linksPage.youtubeLabel", YouTubeIcon],
   ["threads", "linksPage.threadsLabel", ThreadsIcon],
@@ -15,7 +16,7 @@ const BRAND_LINKS = [
 /**
  * A link-in-bio page (same idea as the linktr.ee/madar.qa page this
  * mirrors) rather than a regular site page — no site header, nav, or
- * footer. The featured join card uses the same video banner as /join.
+ * footer. The featured card shows the same video banner as /join.
  */
 export default function LinksPage() {
   const { t } = useLang();
@@ -35,11 +36,9 @@ export default function LinksPage() {
         </div>
 
         <div className="links-list">
-          {/* Featured link: our own join-the-team page, not an external URL. */}
-          <a className="link-card-featured" href="/join">
+          <div className="link-card-featured">
             <HeroVideo src="/assets/videos/hero-madar.mp4" />
-            <span>{t("linksPage.featuredLabel")}</span>
-          </a>
+          </div>
 
           <a className="link-button" href={MADAR_LINKS.aflakChannel} target="_blank" rel="noopener">
             <span className="link-button-icon link-button-icon--photo">
