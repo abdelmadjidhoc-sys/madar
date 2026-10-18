@@ -47,7 +47,7 @@ export default function LinksPage() {
             <span>{t("linksPage.aflakLabel")}</span>
           </a>
 
-          <a className="link-button" href={MADAR_LINKS.instagram} target="_blank" rel="noopener">
+          <a className="link-button" href={MADAR_LINKS.addedValueChannel} target="_blank" rel="noopener">
             <span className="link-button-icon">
               <img src="/assets/images/logo-on-dark.svg" alt="" />
             </span>

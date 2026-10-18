@@ -115,7 +115,7 @@ kept — cream is an explicitly pinned brand color, and the padding flag was a f
     `assets/images/founders/`, and wired in the real names and official titles:
     السيد/ سعود عبدالعزيز الهيدوس (الرئيس التنفيذي)، الأستاذ/ صالح محمد العبيدلي (رئيس
     الفعاليات والبرامج)، الأستاذة/ خلود فضل البوعينين (رئيس التطوير والابتكار)، السيد/ ظاهر
-    ناصر الناصر (رئيس العلاقات والإعلام).
+    ناصر الناصر (رئيس فريق مدار الإعلامي).
   - Restyled the cards from small circular avatars to full-bleed portrait photo cards (name
     in white, title in amber, positioned at the bottom-start) after you shared a reference
     design; dropped an initial dark gradient scrim behind the text per your feedback, using

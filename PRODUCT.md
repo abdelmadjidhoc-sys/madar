@@ -67,7 +67,7 @@ Contact happens through an existing external Google Form (session/inquiry reques
   - السيد/ سعود عبدالعزيز الهيدوس — الرئيس التنفيذي
   - الأستاذ/ صالح محمد العبيدلي — رئيس الفعاليات والبرامج
   - الأستاذة/ خلود فضل البوعينين — رئيس التطوير والابتكار
-  - السيد/ ظاهر ناصر الناصر — رئيس العلاقات والإعلام
+  - السيد/ ظاهر ناصر الناصر — رئيس فريق مدار الإعلامي
 - Confirmed stats for the Stats section (as of 2026-09-27): 12 media coverages, 37K+ views on coverage, 20+ media outlets partnered with. Re-confirm before reusing if this date is old.
 - Confirmed real news items for the News (أخبار مدار) section, sourced from Madar's own social posts: an Al Wakrah beach cleanup campaign (Al Wakrah Club Youth Apparatus), an interactive dialogue session ("في أي زمن نعيش؟!"), and the second "Bil-Arabi" forum at Qatar Foundation.
 - Confirmed intellectual-property notice text for the footer (بالعربية والإنجليزية DRAFT), asserting rights are licensed by the relevant authorities in Qatar and prohibiting reuse without permission.
