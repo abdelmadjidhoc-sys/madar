@@ -9,7 +9,8 @@ import NewsGrid from "../NewsGrid";
 import Founders from "./Founders";
 import Podcast from "./Podcast";
 import StatNumber from "./StatNumber";
-import { ArrowIcon, BookIcon, BroadcastIcon, CalendarIcon, CameraIcon, CompassIcon, MicIcon } from "../icons";
+import { MADAR_LINKS } from "@/lib/content";
+import { ArrowIcon, BookIcon, BroadcastIcon, CalendarIcon, CameraIcon, CompassIcon, MailIcon, MicIcon } from "../icons";
 
 // Same order as activities.items in lib/content.js
 const ACTIVITY_ICONS = [BroadcastIcon, BookIcon, CalendarIcon, MicIcon, CameraIcon, CompassIcon];
@@ -71,7 +72,12 @@ export default function HomePage() {
               </a>
 
               <a className="btn btn--outline" href="/contact">
-                <span>{t("contact.formHeading")}</span>
+                <span>{t("contact.bookSession")}</span>
+                <ArrowIcon className="icon icon-arrow" />
+              </a>
+
+              <a className="btn btn--outline" href="/join">
+                <span>{t("contact.joinTeam")}</span>
                 <ArrowIcon className="icon icon-arrow" />
               </a>
             </div>
@@ -165,15 +171,45 @@ export default function HomePage() {
 
               <h3 className="contact-subheading">{t("contact.socialHeading")}</h3>
               <SocialList />
+
+              <a className="contact-email" href={"mailto:" + MADAR_LINKS.email}>
+                <MailIcon />
+                <span dir="ltr">{MADAR_LINKS.email}</span>
+              </a>
             </div>
 
             <div className="contact-form-panel">
               <h3 className="contact-subheading">{t("contact.formHeading")}</h3>
               <p>{t("contact.formIntro")}</p>
-              <a className="btn btn--primary" href="/contact">
-                <span>{t("contact.formHeading")}</span>
-                <ArrowIcon className="icon icon-arrow" />
-              </a>
+              <div className="contact-actions">
+                <a className="btn btn--primary" href="/contact">
+                  <span>{t("contact.bookSession")}</span>
+                  <ArrowIcon className="icon icon-arrow" />
+                </a>
+
+                <a className="btn btn--outline" href="/join">
+                  <span>{t("contact.joinTeam")}</span>
+                  <ArrowIcon className="icon icon-arrow" />
+                </a>
+              </div>
+
+              {/* Same buttons as /links, minus the ones already on this section
+                  (session button, social icons, email under the icons). */}
+              <div className="contact-links">
+                <a className="link-button" href={MADAR_LINKS.aflakChannel} target="_blank" rel="noopener">
+                  <span className="link-button-icon link-button-icon--photo">
+                    <img src="/assets/images/aflak-logo.jpg" alt="" />
+                  </span>
+                  <span>{t("linksPage.aflakLabel")}</span>
+                </a>
+
+                <a className="link-button" href={MADAR_LINKS.addedValueChannel} target="_blank" rel="noopener">
+                  <span className="link-button-icon">
+                    <img src="/assets/images/logo-on-dark.svg" alt="" />
+                  </span>
+                  <span>{t("linksPage.channelLabel")}</span>
+                </a>
+              </div>
             </div>
           </div>
         </RevealSection>
