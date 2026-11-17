@@ -360,6 +360,21 @@ html[lang="en"] .lang-toggle {
   font-family: var(--font-body-ar);
 }
 
+.login-link {
+  border-radius: var(--radius-pill);
+  padding: 0.5rem 1.1rem;
+  background: var(--color-amber);
+  color: var(--color-ink);
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: filter 0.2s var(--ease-out);
+}
+
+.login-link:hover {
+  filter: brightness(1.08);
+}
+
 .lang-toggle:hover {
   border-color: var(--color-amber);
   background: rgba(243, 239, 231, 0.08);

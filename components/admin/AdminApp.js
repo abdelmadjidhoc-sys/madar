@@ -87,8 +87,8 @@ function formatDate(iso, lang) {
   });
 }
 
-export default function AdminApp({ username }) {
-  const { lang, setLang, t } = useLang();
+export default function AdminApp() {
+  const { lang, t } = useLang();
   // "sessions" = /contact requests, "applications" = /join applications
   const [view, setView] = useState("applications");
   const [rows, setRows] = useState(null);
@@ -290,25 +290,6 @@ export default function AdminApp({ username }) {
   return (
     <div>
       <DocumentTitle titleKey="admin.metaTitle" />
-
-      <header className="admin-header">
-        <div className="admin-header-inner">
-          {/* Plain <a>, not next/link: the site uses a different root layout + stylesheet */}
-          <a href="/" aria-label={t("admin.backToSite")}>
-            <img className="admin-logo" src="/assets/images/logo-on-dark.svg" alt={t("brand.name")} />
-          </a>
-          <h1>{t("admin.heading")}</h1>
-          <p className="admin-whoami">
-            <button className="admin-lang-toggle" type="button" onClick={() => setLang(lang === "ar" ? "en" : "ar")}>
-              {t("nav.langToggle")}
-            </button>
-            <span dir="ltr">{username}</span>
-            <button className="admin-switch-link" type="button" onClick={logOut}>
-              {t("admin.logOut")}
-            </button>
-          </p>
-        </div>
-      </header>
 
       <main className="admin-main">
         <div className="admin-tabs" role="tablist">

@@ -6,13 +6,13 @@
  * Admin only: requires the session cookie from /api/admin/login (lib/auth.js).
  */
 import { getPool } from "@/lib/db";
-import { rejectUnlessAdmin } from "@/lib/auth";
+import { rejectUnlessRequestsAccess } from "@/lib/auth";
 
 // Always query live; never prerender this at build time.
 export const dynamic = "force-dynamic";
 
 export async function GET(request) {
-  const denied = rejectUnlessAdmin(request);
+  const denied = await rejectUnlessRequestsAccess(request);
   if (denied) return denied;
 
   try {

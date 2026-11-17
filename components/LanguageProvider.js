@@ -21,10 +21,12 @@ function getPath(obj, path) {
   }, obj);
 }
 
-export function LanguageProvider({ children }) {
-  const [lang, setLangState] = useState(DEFAULT_LANG);
+/** `forcedLang` pins the language (the team backend is Arabic only and ignores the saved choice). */
+export function LanguageProvider({ children, forcedLang }) {
+  const [lang, setLangState] = useState(forcedLang || DEFAULT_LANG);
 
   useEffect(() => {
+    if (forcedLang) return;
     let saved = null;
     try {
       saved = localStorage.getItem(STORAGE_KEY);
@@ -32,7 +34,7 @@ export function LanguageProvider({ children }) {
       /* private browsing / storage disabled — stay on the default */
     }
     if (saved && MADAR_CONTENT[saved]) setLangState(saved);
-  }, []);
+  }, [forcedLang]);
 
   useEffect(() => {
     document.documentElement.setAttribute("lang", lang);
@@ -40,13 +42,14 @@ export function LanguageProvider({ children }) {
   }, [lang]);
 
   const setLang = useCallback((next) => {
+    if (forcedLang) return;
     setLangState(next);
     try {
       localStorage.setItem(STORAGE_KEY, next);
     } catch (e) {
       /* language just won't persist */
     }
-  }, []);
+  }, [forcedLang]);
 
   const t = useCallback(
     (path) => {

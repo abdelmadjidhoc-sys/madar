@@ -1,9 +1,9 @@
 import "../admin.css";
+import "../team.css";
 import { LanguageProvider } from "@/components/LanguageProvider";
 
-// A separate root layout so the internal admin tool never loads the public
-// site's stylesheet (and vice versa). Arabic is the default, like the site;
-// the admin can switch to English (same saved preference as the site).
+// A separate root layout so the internal team backend never loads the public
+// site's stylesheet (and vice versa). The backend is Arabic only.
 export const metadata = {
   title: "لوحة التحكم | مدار",
   robots: { index: false, follow: false },
@@ -21,7 +21,7 @@ export default function AdminLayout({ children }) {
       </head>
       {/* suppressHydrationWarning: browser extensions (e.g. Grammarly) inject attributes into <body> */}
       <body suppressHydrationWarning>
-        <LanguageProvider>{children}</LanguageProvider>
+        <LanguageProvider forcedLang="ar">{children}</LanguageProvider>
       </body>
     </html>
   );

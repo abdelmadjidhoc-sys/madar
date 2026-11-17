@@ -516,3 +516,79 @@ html[lang="en"] .admin-detail-fields dt {
   opacity: 0.6;
   cursor: default;
 }
+
+/* ---------- Team accounts: sign-up, waiting page ---------- */
+.admin-auth-switch,
+.admin-shell-text {
+  margin: 0;
+  color: var(--admin-cream);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.admin-auth-switch a {
+  color: var(--admin-amber);
+}
+
+.admin-shell-role {
+  opacity: 0.75;
+}
+
+.admin-login-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: var(--admin-cream);
+}
+
+.admin-login-checks legend {
+  margin-bottom: 0.4rem;
+  padding: 0;
+}
+
+.admin-login-checks label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Show/hide button inside a password field. Physical `right` on purpose: the
+   input is left-to-right, so its text starts on the left and the button sits opposite. */
+.admin-password-wrap {
+  position: relative;
+  display: block;
+}
+
+.admin-password-wrap input {
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 4.5rem;
+}
+
+.admin-password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
+  padding: 0.3rem 0.6rem;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--admin-teal);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-password-toggle:hover {
+  background: rgba(14, 92, 104, 0.1);
+}
+
+.admin-password-toggle:focus-visible {
+  outline: 2px solid var(--admin-amber);
+}

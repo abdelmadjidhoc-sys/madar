@@ -1,72 +1,69 @@
 "use client";
 
 import { useState } from "react";
-import { DocumentTitle, useLang } from "../LanguageProvider";
+import PasswordField from "./PasswordField";
+
+const ERRORS = {
+  invalid: "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+  inactive: "هذا الحساب موقوف. تواصل مع إدارة مدار",
+  tooMany: "محاولات كثيرة. حاول مرة أخرى بعد قليل",
+  server: "حدث خطأ. حاول مرة أخرى",
+};
 
 export default function LoginForm() {
-  const { lang, setLang, t } = useLang();
-  const [error, setError] = useState(null); // null | "wrongCredentials" | "loginError"
+  const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     setSubmitting(true);
-    setError(null);
+    setError("");
 
-    fetch("/api/admin/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: data.get("username"), password: data.get("password") }),
-    })
-      .then((res) => {
-        if (res.status === 401) throw new Error("wrongCredentials");
-        if (!res.ok) throw new Error("loginError");
-        // Full navigation so the dashboard is rendered with the new cookie.
-        // ?next= (set by proxy.js for CV links) is honoured for same-site paths only.
-        const next = new URLSearchParams(window.location.search).get("next");
-        const sameSite = next && /^\/[^/\\]/.test(next);
-        window.location.href = sameSite ? next : "/adminmadar";
-      })
-      .catch((err) => {
-        setError(err.message === "wrongCredentials" ? "wrongCredentials" : "loginError");
-        setSubmitting(false);
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: data.get("email"), password: data.get("password") }),
       });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(ERRORS[body.error] ? body.error : "server");
+      }
+      // Full navigation so the page is rendered with the new cookie.
+      // ?next= (set by proxy.js for CV links) is honoured for same-site paths only.
+      const next = new URLSearchParams(window.location.search).get("next");
+      window.location.href = next && /^\/[^/\\]/.test(next) ? next : "/adminmadar";
+    } catch (err) {
+      setError(ERRORS[err.message] || ERRORS.server);
+      setSubmitting(false);
+    }
   }
 
   return (
     <div className="admin-picker">
-      <DocumentTitle titleKey="admin.loginMetaTitle" />
-
-      <button
-        className="admin-lang-toggle admin-lang-toggle--corner"
-        type="button"
-        onClick={() => setLang(lang === "ar" ? "en" : "ar")}
-      >
-        {t("nav.langToggle")}
-      </button>
-
-      <img className="admin-picker-logo" src="/assets/images/logo-on-dark.svg" alt={t("brand.name")} />
+      <img className="admin-picker-logo" src="/assets/images/logo-on-dark.svg" alt="مدار" />
       <form className="admin-login" onSubmit={handleSubmit}>
-        <h1 className="admin-login-title">{t("admin.loginHeading")}</h1>
+        <h1 className="admin-login-title">تسجيل الدخول</h1>
 
         <label className="admin-login-field">
-          <span>{t("admin.username")}</span>
-          <input type="text" name="username" dir="ltr" autoComplete="username" required autoFocus />
+          <span>البريد الإلكتروني</span>
+          <input type="email" name="email" dir="ltr" autoComplete="email" required autoFocus />
         </label>
 
-        <label className="admin-login-field">
-          <span>{t("admin.password")}</span>
-          <input type="password" name="password" dir="ltr" autoComplete="current-password" required />
-        </label>
+        <PasswordField label="كلمة المرور" name="password" autoComplete="current-password" />
 
         <p className="admin-login-error" role="alert">
-          {error && t("admin." + error)}
+          {error}
         </p>
 
         <button className="admin-picker-btn" type="submit" disabled={submitting}>
-          {submitting ? t("admin.loggingIn") : t("admin.logIn")}
+          {submitting ? "جارٍ الدخول…" : "دخول"}
         </button>
+
+        <p className="admin-auth-switch">
+          ليس لديك حساب؟ <a href="/adminmadar/signup">إنشاء حساب</a>
+        </p>
       </form>
     </div>
   );

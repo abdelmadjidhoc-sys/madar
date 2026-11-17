@@ -62,6 +62,9 @@ export default function SiteHeader({ onHome = false }) {
         </nav>
 
         <div className="header-actions">
+          <a className="login-link" href="/adminmadar/login">
+            {t("nav.login")}
+          </a>
           <button className="lang-toggle" type="button" onClick={() => setLang(lang === "ar" ? "en" : "ar")}>
             <span>{t("nav.langToggle")}</span>
           </button>

@@ -11,7 +11,7 @@
  * Admin only: requires the session cookie from /api/admin/login (lib/auth.js).
  */
 import { getPool } from "@/lib/db";
-import { rejectUnlessAdmin } from "@/lib/auth";
+import { rejectUnlessRequestsAccess } from "@/lib/auth";
 
 // Every column except the CV bytes.
 const DETAIL_COLUMNS = `id, full_name, phone, email, age, organization, instagram,
@@ -20,7 +20,7 @@ const DETAIL_COLUMNS = `id, full_name, phone, email, age, organization, instagra
   cv_filename, created_at`;
 
 export async function GET(request) {
-  const denied = rejectUnlessAdmin(request);
+  const denied = await rejectUnlessRequestsAccess(request);
   if (denied) return denied;
 
   const query = Object.fromEntries(new URL(request.url).searchParams);
@@ -74,7 +74,7 @@ export async function GET(request) {
 }
 
 export async function DELETE(request) {
-  const denied = rejectUnlessAdmin(request);
+  const denied = await rejectUnlessRequestsAccess(request);
   if (denied) return denied;
 
   const id = Number(new URL(request.url).searchParams.get("id"));
