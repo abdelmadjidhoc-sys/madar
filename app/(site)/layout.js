@@ -1,6 +1,7 @@
 import "../styles.css";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import SkipLink from "@/components/SkipLink";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 export const metadata = {
   title: "مدار | حيث تدور الفرص",
@@ -35,6 +36,7 @@ export default function SiteLayout({ children }) {
           <SkipLink />
           {children}
         </LanguageProvider>
+        <GoogleAnalytics />
       </body>
     </html>
   );
